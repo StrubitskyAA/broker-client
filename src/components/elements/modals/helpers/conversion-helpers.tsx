@@ -2,10 +2,9 @@ import _ from "lodash";
 
 import { currencyInfoType } from "../../../../ts-types";
 
-import currencyList from "../../../../constants/currencies.json";
-
 export const getCurrencyIndexAdapter = (
   filteredList: currencyInfoType[],
+  currencyList: currencyInfoType[],
   currencyIndex: number,
   isInversion?: boolean
 ): number => {

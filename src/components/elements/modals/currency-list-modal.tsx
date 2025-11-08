@@ -6,13 +6,20 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, FC, KeyboardEvent, useCallback, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import _ from "lodash";
 
 import { currencyInfoType } from "../../../ts-types";
 
 import searchIcon from "../../../icons/search-icon.svg";
-import currencyList from "../../../constants/currencies.json";
+import { CurrencyListContext } from "../../blocks/app";
 
 import { getCurrencyIndexAdapter } from "./helpers/conversion-helpers";
 
@@ -32,11 +39,12 @@ const CurrencyListModal: FC<{
   onChange: (index: number) => void;
   onClose: () => void;
 }> = ({ index, isOpen, onChange, onClose }) => {
+  const currencyList = useContext(CurrencyListContext);
   const [searchText, setSearchText] = useState<string>("");
   const [currencyFilteredList, setCurrencyFilteredList] =
     useState<currencyInfoType[]>(currencyList);
   const [adaptedCurrencyIndex, setAdaptedCurrencyIndex] = useState<number>(
-    getCurrencyIndexAdapter(currencyList, index, true)
+    getCurrencyIndexAdapter(currencyList, currencyList, index, true)
   );
 
   const currencyItemSelectHandler = useCallback(
@@ -44,12 +52,13 @@ const CurrencyListModal: FC<{
       setAdaptedCurrencyIndex(filteredListIndex);
       const currencyIndex = getCurrencyIndexAdapter(
         currencyFilteredList,
+        currencyList,
         filteredListIndex
       );
       onClose();
       onChange(currencyIndex);
     },
-    [onClose, onChange, currencyFilteredList]
+    [onClose, onChange, currencyFilteredList, currencyList]
   );
   const searchTextChangeHandler = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
@@ -65,11 +74,11 @@ const CurrencyListModal: FC<{
           _.toLower(curencyInfo.code).includes(_.toLower(text))
       );
       setAdaptedCurrencyIndex(
-        getCurrencyIndexAdapter(newFilteredList, index, true)
+        getCurrencyIndexAdapter(newFilteredList, currencyList, index, true)
       );
       setCurrencyFilteredList(newFilteredList);
     },
-    [index]
+    [index, currencyList]
   );
   const keyDownHandler = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
