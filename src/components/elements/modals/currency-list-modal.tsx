@@ -9,7 +9,7 @@ import {
 import { ChangeEvent, FC, KeyboardEvent, useCallback, useState } from "react";
 import _ from "lodash";
 
-import { currencyInfoType } from "../../../type-script";
+import { currencyInfoType } from "../../../ts-types";
 
 import searchIcon from "../../../icons/search-icon.svg";
 import currencyList from "../../../constants/currencies.json";

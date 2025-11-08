@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import { FC } from "react";
 
-import { amountInputType, currensyControlType } from "../../../type-script";
+import { amountInputType, currensyControlType } from "../../../ts-types";
 
 import AmountInput from "./components/amount-input";
 import CurrencySelectionBlock from "./components/currency-selection-block";

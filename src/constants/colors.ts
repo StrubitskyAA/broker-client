@@ -1,3 +1,16 @@
+export enum fillVariantsEnum {
+  outlined = "outlined",
+  filled = "filled",
+  standard = "standard",
+}
+
+export enum alertColorsEnum {
+  info = "info",
+  success = "success",
+  warning = "warning",
+  error = "error",
+}
+
 const colors = {
   white: "#FFFFFF",
   green25: "#F0FDF4",

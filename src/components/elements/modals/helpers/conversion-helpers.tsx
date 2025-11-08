@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { currencyInfoType } from "../../../../type-script";
+import { currencyInfoType } from "../../../../ts-types";
 
 import currencyList from "../../../../constants/currencies.json";
 

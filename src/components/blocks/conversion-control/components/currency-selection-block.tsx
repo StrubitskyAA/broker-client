@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { FC } from "react";
 
-import { currensyControlType } from "../../../../type-script";
+import { currensyControlType } from "../../../../ts-types";
 
 import CurrencySelector from "./currency-selector";
 import ReshuffleButton from "../../../elements/buttons/reshuffle-button";

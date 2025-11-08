@@ -1,13 +1,17 @@
+import { alertColorsEnum } from "../constants/colors";
+
 export type currensyControlType = {
   currencyFromIndex: number;
   setCurrencyFromIndex: (index: number) => void;
   currencyToIndex: number;
   setCurrencyToIndex: (index: number) => void;
 };
+
 export type amountInputType = {
   amount: string;
   onAmountChange: (value: string) => void;
 };
+
 export type currencyInfoType = {
   name: string;
   symbol: string;
@@ -19,3 +23,10 @@ export type currencyInfoType = {
   countryCodeISO2: string;
   flagSrc: string;
 };
+
+export type currencyRatesType = { [currencyCode: string]: number };
+
+export interface infoInterface {
+  infoText: string;
+  infoType: alertColorsEnum;
+}

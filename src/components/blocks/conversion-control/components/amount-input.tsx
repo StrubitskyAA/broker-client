@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { FC } from "react";
 
-import { amountInputType } from "../../../../type-script";
+import { amountInputType } from "../../../../ts-types";
 
 import NumberInput from "../../../elements/inputs/number-input";
 

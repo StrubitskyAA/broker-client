@@ -1,7 +1,7 @@
 import { Avatar, ListItemButton, ListItemText } from "@mui/material";
 import { FC, useCallback } from "react";
 
-import { currencyInfoType } from "../../../type-script";
+import { currencyInfoType } from "../../../ts-types";
 
 import checkItem from "../../../icons/check-rounded.svg";
 

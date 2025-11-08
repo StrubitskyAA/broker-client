@@ -8,7 +8,7 @@ import { flexFullStyles, flexCentered } from "../../../styles/flex-styles";
 
 const Wrapper: FC = () => {
   const [currencyFromIndex, setCurrencyFromIndex] = useState<number>(0);
-  const [currencyToIndex, setCurrencyToIndex] = useState<number>(1);
+  const [currencyToIndex, setCurrencyToIndex] = useState<number>(2);
   const [amount, setAmount] = useState<string>("0");
 
   const amountChangeHandler = useCallback(

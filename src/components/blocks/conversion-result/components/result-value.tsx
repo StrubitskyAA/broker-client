@@ -1,0 +1,42 @@
+import { Typography } from "@mui/material";
+import { FC, memo } from "react";
+
+import { exchangeBlockPropsType } from "./exchange-block";
+
+import currencyList from "../../../../constants/currencies.json";
+
+import { checkIsEqualResultValuesProps } from "../helpers/memoization";
+import { getConversionResult } from "../helpers";
+
+import { resultConversionStyles, resultStyles } from "../styles";
+
+export type resultValueBlockPropsType = exchangeBlockPropsType & {
+  amount: string;
+};
+
+const ResultValueBlock: FC<resultValueBlockPropsType> = memo(function Inner({
+  currencyFromIndex,
+  currencyToIndex,
+  amount,
+  currencyRates,
+}) {
+  return (
+    <>
+      <Typography sx={resultStyles}>
+        {currencyList[currencyToIndex].symbolNative}
+        {getConversionResult({
+          currencyRates,
+          fromCode: currencyList[currencyFromIndex].code,
+          toCode: currencyList[currencyToIndex].code,
+          amount,
+        })}
+      </Typography>
+      <Typography sx={resultConversionStyles}>
+        {amount} {currencyList[currencyFromIndex].code} =
+      </Typography>
+    </>
+  );
+},
+checkIsEqualResultValuesProps);
+
+export default ResultValueBlock;
