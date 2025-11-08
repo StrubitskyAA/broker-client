@@ -1,9 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { FC, useCallback } from "react";
 
-import { useAppDispatch } from "../../../store/hooks/redux-hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../store/hooks/redux-hooks";
+import { lastUpdateDateSelector } from "../../../store/selectors";
+import { fetchCurrencyRatesAction } from "../../../store/actions/redux-actions";
 
-import { getCurrencyRatesRequest } from "../../../helpers/requests";
+import { lastUpdateFormat } from "../../../constants/time";
+
+import { convertDateFormat } from "../../../helpers/general-helpers";
 
 import ConnectionStateIndicator from "../../elements/indicators/connection-state-indicator";
 import LastUpdate from "../../elements/info/last-update";
@@ -14,9 +21,10 @@ import { infoTextStyles, titleStyles } from "../../../styles/text-styles";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
+  const lastUpdateDate: string = useAppSelector(lastUpdateDateSelector);
 
   const onRefreshClickHandler = useCallback(() => {
-    getCurrencyRatesRequest(dispatch);
+    dispatch(fetchCurrencyRatesAction(true));
   }, [dispatch]);
 
   return (
@@ -29,7 +37,10 @@ const Header: FC = () => {
       </Typography>
       <Box sx={{ ...flexCentered }}>
         <ConnectionStateIndicator />
-        <LastUpdate sx={{ ml: 1 }} />
+        <LastUpdate
+          sx={{ ml: 1 }}
+          date={convertDateFormat(lastUpdateDate, lastUpdateFormat)}
+        />
         <RefreshButton sx={{ ml: 1 }} onClick={onRefreshClickHandler} />
       </Box>
     </Box>

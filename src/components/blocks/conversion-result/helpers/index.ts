@@ -1,6 +1,10 @@
 import _ from "lodash";
 
-import { currencyRatesType } from "../../../../ts-types";
+import {
+  currencyRatesType,
+  dateStorageType,
+  preferencesStorageType,
+} from "../../../../ts-types";
 
 type exchangeRateFunctionPropTypes = {
   currencyRates: currencyRatesType;
@@ -29,3 +33,24 @@ export const getConversionResult = ({
       _.toNumber(amount) *
       100
   ) / 100;
+
+export const setToStorage = (
+  key: string,
+  value: string | dateStorageType | preferencesStorageType
+) => {
+  let data = _.toString(value);
+  try {
+    data = JSON.stringify(value);
+  } catch (e) {}
+  localStorage.setItem(key, data);
+};
+
+export const getFromStorage = (key: string) => {
+  let data: string | dateStorageType | preferencesStorageType | null =
+    localStorage.getItem(key);
+  try {
+    data = JSON.parse(data as string);
+  } catch (e) {}
+
+  return data;
+};

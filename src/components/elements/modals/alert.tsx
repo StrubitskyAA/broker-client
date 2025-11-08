@@ -11,7 +11,7 @@ import { clearInfoMessageAction } from "../../../store/actions/redux-actions";
 
 import { infoInterface } from "../../../ts-types";
 
-import { infoAutoCloseTimeout } from "../../../constants/timeouts";
+import { infoAutoCloseTimeout } from "../../../constants/time";
 import { fillVariantsEnum } from "../../../constants/colors";
 
 import CloseButton from "../buttons/close-button";

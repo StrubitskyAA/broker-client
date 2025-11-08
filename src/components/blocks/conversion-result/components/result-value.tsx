@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { FC, memo } from "react";
+import _ from "lodash";
 
 import { exchangeBlockPropsType } from "./exchange-block";
 
@@ -32,7 +33,7 @@ const ResultValueBlock: FC<resultValueBlockPropsType> = memo(function Inner({
         })}
       </Typography>
       <Typography sx={resultConversionStyles}>
-        {amount} {currencyList[currencyFromIndex].code} =
+        {_.toNumber(amount) || 0} {currencyList[currencyFromIndex].code} =
       </Typography>
     </>
   );

@@ -1,14 +1,13 @@
 import { currencyRatesType, infoInterface } from "../../ts-types";
 
 import {
-  connectionStatusActionTypesEnum,
   currencyRatesActionTypesEnum,
   infoActionTypesEnum,
 } from "../constants/redux-constants";
 
-export const setConnectionStatusAction = (connectionStatus: boolean) => ({
-  type: connectionStatusActionTypesEnum.setConnectionStatus,
-  payload: connectionStatus,
+export const fetchCurrencyRatesAction = (isActive?: boolean) => ({
+  type: currencyRatesActionTypesEnum.fetchCurrencyRates,
+  payload: isActive,
 });
 
 export const setCurrencyRatesAction = (
@@ -30,5 +29,5 @@ export const setInfoMessageAction = (message: infoInterface) => ({
 });
 
 export const clearInfoMessageAction = () => ({
-  type: infoActionTypesEnum.setInfoMessage,
+  type: infoActionTypesEnum.clearInfoMessage,
 });

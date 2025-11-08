@@ -1,5 +1,10 @@
 import { Box, Grid } from "@mui/material";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
+
+import { userPreferenciesStorageKey } from "../../../constants/general-constants";
+
+import { setToStorage } from "../conversion-result/helpers";
+import { getIndexFromStorage } from "./helpers/wrapper-helpers";
 
 import ControlWrapper from "../conversion-control/control-wrapper";
 import ResultWrapper from "../conversion-result/result-wrapper";
@@ -7,14 +12,25 @@ import ResultWrapper from "../conversion-result/result-wrapper";
 import { flexFullStyles, flexCentered } from "../../../styles/flex-styles";
 
 const Wrapper: FC = () => {
-  const [currencyFromIndex, setCurrencyFromIndex] = useState<number>(0);
-  const [currencyToIndex, setCurrencyToIndex] = useState<number>(2);
-  const [amount, setAmount] = useState<string>("0");
+  const [currencyFromIndex, setCurrencyFromIndex] = useState<number>(
+    getIndexFromStorage("indexFrom", 0)
+  );
+  const [currencyToIndex, setCurrencyToIndex] = useState<number>(
+    getIndexFromStorage("indexTo", 2)
+  );
+  const [amount, setAmount] = useState<string>("1");
 
   const amountChangeHandler = useCallback(
     (value: string) => setAmount(value),
     [setAmount]
   );
+
+  useEffect(() => {
+    setToStorage(userPreferenciesStorageKey, {
+      indexFrom: currencyFromIndex,
+      indexTo: currencyToIndex,
+    });
+  }, [currencyFromIndex, currencyToIndex]);
 
   return (
     <Box sx={{ ...flexFullStyles, ...flexCentered }}>

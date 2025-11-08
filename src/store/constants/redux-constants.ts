@@ -1,7 +1,5 @@
-export enum connectionStatusActionTypesEnum {
-  setConnectionStatus = "@SET_CONNECTION_STATUS",
-}
 export enum currencyRatesActionTypesEnum {
+  fetchCurrencyRates = "@FETCHC_CURRENCY_RATES",
   setCurrencyRates = "@SET_CURRENCY_RATES",
   setCurrencyRatesFetchingStatus = "@SET_CURRENCY_RATES_FETCHING_STATUS",
 }

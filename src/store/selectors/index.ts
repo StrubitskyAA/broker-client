@@ -1,8 +1,5 @@
 import { RootState } from "..";
 
-export const connectionStatusSelector = (state: RootState) =>
-  state.connection.connectionStatus;
-
 export const currencyRatesStoreSelector = (state: RootState) =>
   state.currencyRates;
 

@@ -30,3 +30,13 @@ export interface infoInterface {
   infoText: string;
   infoType: alertColorsEnum;
 }
+
+export type dateStorageType = {
+  rates: currencyRatesType;
+  date: string;
+};
+
+export type preferencesStorageType = {
+  indexFrom: number;
+  indexTo: number;
+};
