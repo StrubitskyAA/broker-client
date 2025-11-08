@@ -3,7 +3,7 @@ import { FC, useEffect, createContext, useState } from "react";
 import { currencyRatesSelector } from "../../store/selectors";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/redux-hooks";
 import { fetchCurrencyRatesAction } from "../../store/actions/redux-actions";
-import { useOnce } from "../../store/hooks/useOnce";
+import { useOnce } from "../../hooks/useOnce";
 
 import { currencyInfoType } from "../../ts-types";
 

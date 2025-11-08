@@ -9,9 +9,9 @@ import {
 import {
   ChangeEvent,
   FC,
-  KeyboardEvent,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import _ from "lodash";
@@ -19,12 +19,14 @@ import _ from "lodash";
 import { currencyInfoType } from "../../../ts-types";
 
 import searchIcon from "../../../icons/search-icon.svg";
-import { CurrencyListContext } from "../../blocks/app";
+import { searchDelayTime } from "../../../constants/time";
 
 import { getCurrencyIndexAdapter } from "./helpers/conversion-helpers";
+import useDebounce from "../../../hooks/useDebounce";
 
 import CloseButton from "../buttons/close-button";
 import CurrencyItemButton from "../buttons/currency-item-button";
+import { CurrencyListContext } from "../../blocks/app";
 
 import { modalBodyStyles, modalStyles } from "./styles/modal-styles";
 import {
@@ -46,6 +48,7 @@ const CurrencyListModal: FC<{
   const [adaptedCurrencyIndex, setAdaptedCurrencyIndex] = useState<number>(
     getCurrencyIndexAdapter(currencyList, currencyList, index, true)
   );
+  const debouncedSearchText = useDebounce(searchText, searchDelayTime);
 
   const currencyItemSelectHandler = useCallback(
     (filteredListIndex: number) => {
@@ -80,15 +83,10 @@ const CurrencyListModal: FC<{
     },
     [index, currencyList]
   );
-  const keyDownHandler = useCallback(
-    (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        filterCurencyListHandler(searchText);
-      }
-    },
-    [searchText, filterCurencyListHandler]
-  );
+
+  useEffect(() => {
+    filterCurencyListHandler(debouncedSearchText || "");
+  }, [debouncedSearchText, filterCurencyListHandler]);
 
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -118,7 +116,6 @@ const CurrencyListModal: FC<{
             placeholder="Type currency mame or code"
             inputProps={{ "aria-label": "Type currency mame or code" }}
             value={searchText}
-            onKeyDown={keyDownHandler}
             onChange={searchTextChangeHandler}
           />
         </Box>
