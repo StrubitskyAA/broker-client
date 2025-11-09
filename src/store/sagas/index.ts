@@ -24,6 +24,9 @@ import {
 function* fetchRates(action: AnyAction) {
   try {
     yield delay(150);
+    if (action.payload) {
+      yield put(setCurrencyRatesFetchingStatusAction(true));
+    }
 
     //@ts-ignore-next-line
     const result = yield call(currencyRatesApi.getCurrencyRates);

@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
-import { FC, memo } from "react";
+import { FC, memo, useContext } from "react";
 import _ from "lodash";
 
 import { exchangeBlockPropsType } from "./exchange-block";
 
-import currencyList from "../../../../constants/currencies.json";
-
 import { checkIsEqualResultValuesProps } from "../helpers/memoization";
 import { getConversionResult } from "../helpers";
+
+import { CurrencyListContext } from "../../app";
 
 import { resultConversionStyles, resultStyles } from "../styles";
 
@@ -21,6 +21,8 @@ const ResultValueBlock: FC<resultValueBlockPropsType> = memo(function Inner({
   amount,
   currencyRates,
 }) {
+  const currencyList = useContext(CurrencyListContext);
+
   return (
     <>
       <Typography sx={resultStyles}>

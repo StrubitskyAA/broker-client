@@ -52,6 +52,6 @@ export const overlayStyles = {
   right: 0,
   bottom: 0,
   zIndex: 100,
-  backgroundColor: "rgba(0, 0, 0, 0.2)",
+  backgroundColor: colors.white,
   ...flexCentered,
 };

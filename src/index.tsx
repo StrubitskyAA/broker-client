@@ -6,7 +6,7 @@ import store from "./store";
 import reportWebVitals from "./reportWebVitals";
 
 import App from "./components/blocks/app";
-import InfoAlert from "./components/elements/modals/alert";
+import InfoAlert from "./components/elements/info/alert";
 
 import "./index.css";
 

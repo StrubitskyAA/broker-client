@@ -14,7 +14,7 @@ import { infoInterface } from "../../../ts-types";
 import { infoAutoCloseTimeout } from "../../../constants/time";
 import { fillVariantsEnum } from "../../../constants/colors";
 
-import CloseButton from "../buttons/close-button";
+// import CloseButton from "../buttons/close-button";
 
 import { flexItemCentered } from "../../../styles/flex-styles";
 
@@ -39,13 +39,13 @@ const InfoAlert: FC<{
         severity={infoType}
         variant={fillVariantsEnum.filled}
         sx={flexItemCentered}
-        action={
-          <CloseButton
-            onClose={
-              onClose ? onClose : () => dispatch(clearInfoMessageAction())
-            }
-          />
-        }
+        // action={
+        //   <CloseButton
+        //     onClose={
+        //       onClose ? onClose : () => dispatch(clearInfoMessageAction())
+        //     }
+        //   />
+        // }
       >
         <Typography variant="h6" color="inherit">
           {text || infoText}

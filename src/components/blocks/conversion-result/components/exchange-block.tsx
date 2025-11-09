@@ -1,13 +1,12 @@
-import { FC, memo } from "react";
+import { FC, memo, useContext } from "react";
 
 import { currencyRatesType } from "../../../../ts-types";
-
-import currencyList from "../../../../constants/currencies.json";
 
 import { checkIsEqualExchangeProps } from "../helpers/memoization";
 import { exchangedRate } from "../helpers";
 
 import ExchangeLine from "./exchange-line";
+import { CurrencyListContext } from "../../app";
 
 export type exchangeBlockPropsType = {
   currencyFromIndex: number;
@@ -20,6 +19,8 @@ const ExchangeBlock: FC<exchangeBlockPropsType> = memo(function Inner({
   currencyToIndex,
   currencyRates,
 }) {
+  const currencyList = useContext(CurrencyListContext);
+
   return (
     <>
       <ExchangeLine
