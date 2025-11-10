@@ -1,5 +1,13 @@
 import { List } from "@mui/material";
-import { FC, RefObject, useCallback, useMemo, useRef, useState } from "react";
+import {
+  FC,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { currencyListType } from "../../../../ts-types";
 
@@ -7,7 +15,6 @@ import {
   onCurrencyListMouseMove,
   onCurrencyListKeyDown,
 } from "../helpers/select-curency-item-helpers";
-import { useOnce } from "../../../../hooks/useOnce";
 
 import CurrencyItemButton from "../../buttons/currency-item-button";
 
@@ -51,16 +58,31 @@ const CurrencyList: FC<{
     [setHoveredIndex, currencyLength, scrolContainerRef, setCodeByIndex]
   );
 
-  useOnce(() => {
-    (containerRef.current as HTMLUListElement).addEventListener(
-      "mousemove",
-      mouseMoveHandler
-    );
-    (modalRef.current as HTMLDivElement).addEventListener(
-      "keydown",
-      mouseKeyPressHandler
-    );
-  }, !!containerRef.current);
+  useEffect(() => {
+    const modalContainer = modalRef.current as HTMLDivElement;
+
+    if (modalContainer) {
+      modalContainer.addEventListener("keydown", mouseKeyPressHandler);
+    }
+    return () => {
+      if (modalContainer) {
+        modalContainer.removeEventListener("keydown", mouseKeyPressHandler);
+      }
+    };
+  }, [mouseKeyPressHandler, modalRef]);
+
+  useEffect(() => {
+    const listContainer = containerRef.current as HTMLUListElement;
+
+    if (listContainer) {
+      listContainer.addEventListener("mousemove", mouseMoveHandler);
+    }
+    return () => {
+      if (listContainer) {
+        listContainer.removeEventListener("mousemove", mouseMoveHandler);
+      }
+    };
+  }, [mouseMoveHandler, containerRef]);
 
   return (
     <List ref={containerRef}>

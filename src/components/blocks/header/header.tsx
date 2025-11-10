@@ -45,15 +45,15 @@ const Header: FC = () => {
         sx={{
           ...flexCentered,
           ...(matches ? flexRowStyles : flexColStyles),
-          mt: 3,
+          mt: 1,
         }}
       >
-        <ConnectionStateIndicator />
+        <ConnectionStateIndicator sx={{ m: "4px 0" }} />
         <LastUpdate
-          sx={{ ml: 1.5, mr: 1 }}
+          sx={{ m: "4px 8px" }}
           date={convertDateFormat(lastUpdateDate, lastUpdateFormat)}
         />
-        <RefreshButton sx={{ ml: 1 }} onClick={onRefreshClickHandler} />
+        <RefreshButton sx={{ m: "4px 8px" }} onClick={onRefreshClickHandler} />
       </Box>
     </Box>
   );

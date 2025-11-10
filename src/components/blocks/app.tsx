@@ -46,7 +46,7 @@ const App: FC<{ hasConnection: boolean }> = ({ hasConnection }) => {
         ...flexFullStyles,
         ...flexCentered,
         ...flexColStyles,
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <Header />
