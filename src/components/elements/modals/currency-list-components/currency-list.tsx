@@ -64,19 +64,18 @@ const CurrencyList: FC<{
 
   return (
     <List ref={containerRef}>
-      {Object.values(currencyList).map((currencyInfo, i) => {
-        return (
-          <CurrencyItemButton
-            key={currencyInfo.code}
-            currencyInfo={currencyInfo}
-            code={currencyInfo.code}
-            onClick={onSelect}
-            index={i}
-            isSelected={selectedCode === currencyInfo.code}
-            isHovered={hoveredIndex === i}
-          />
-        );
-      })}
+      {Object.values(currencyList).map((currencyInfo, i) => (
+        <CurrencyItemButton
+          key={currencyInfo.code}
+          currencyInfo={currencyInfo}
+          code={currencyInfo.code}
+          onClick={onSelect}
+          index={i}
+          isSelected={selectedCode === currencyInfo.code}
+          isHovered={hoveredIndex === i}
+          sx={{ mb: "15px" }}
+        />
+      ))}
     </List>
   );
 };

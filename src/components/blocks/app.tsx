@@ -1,4 +1,5 @@
 import { FC, useEffect, createContext, useState } from "react";
+import { Box } from "@mui/material";
 
 import { currencyRatesSelector } from "../../store/selectors";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/redux-hooks";
@@ -11,6 +12,12 @@ import { contertCurrencyList, updateData } from "../../helpers/general-helpers";
 
 import Header from "./header/header";
 import Wrapper from "./conversion-wrapper/wrapper";
+
+import {
+  flexCentered,
+  flexColStyles,
+  flexFullStyles,
+} from "../../styles/flex-styles";
 
 export const CurrencyListContext = createContext(contertCurrencyList());
 
@@ -34,12 +41,19 @@ const App: FC<{ hasConnection: boolean }> = ({ hasConnection }) => {
   }, !!curencyRates);
 
   return (
-    <>
+    <Box
+      sx={{
+        ...flexFullStyles,
+        ...flexCentered,
+        ...flexColStyles,
+        height: "100vh",
+      }}
+    >
       <Header />
       <CurrencyListContext value={filteredList}>
         <Wrapper />
       </CurrencyListContext>
-    </>
+    </Box>
   );
 };
 

@@ -8,14 +8,10 @@ export const modalStyles = {
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
+  p: 2,
   "& h3": {
-    mt: 3,
-    ml: 2,
-    mr: 2,
-  },
-  "& hr": {
-    mt: 2,
-    mb: 2,
+    fontWeight: 600,
+    fontSize: "16px",
   },
 };
 

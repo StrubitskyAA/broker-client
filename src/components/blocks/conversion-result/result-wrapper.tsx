@@ -16,6 +16,7 @@ import {
   dividerStyles,
 } from "../../../styles/elements-styles";
 import { rateAttantionStyles, resultTitleStyles } from "./styles";
+import { infoTextStyles } from "../../../styles/text-styles";
 
 const ResultWrapper: FC<{
   currencyFromCode: string;
@@ -46,7 +47,10 @@ const ResultWrapper: FC<{
           />
         </>
       ) : (
-        <InfoMessage label="Currency rates are not loaded" />
+        <InfoMessage
+          label="Currency rates are not loaded"
+          sx={{ ...infoTextStyles, padding: "45px 0" }}
+        />
       )}
       <Divider sx={dividerStyles} />
       <Typography sx={rateAttantionStyles}>

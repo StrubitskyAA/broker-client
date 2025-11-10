@@ -9,7 +9,7 @@ import { getCodeFromStorage } from "./helpers/wrapper-helpers";
 import ControlWrapper from "../conversion-control/control-wrapper";
 import ResultWrapper from "../conversion-result/result-wrapper";
 
-import { flexFullStyles, flexCentered } from "../../../styles/flex-styles";
+import { flexCentered } from "../../../styles/flex-styles";
 
 const Wrapper: FC = () => {
   const [currencyFromCode, setCurrencyFromCode] = useState<string>(
@@ -33,7 +33,7 @@ const Wrapper: FC = () => {
   }, [currencyFromCode, currencyToCode]);
 
   return (
-    <Box sx={{ ...flexFullStyles, ...flexCentered }}>
+    <Box sx={{ ...flexCentered }}>
       <Grid
         container
         spacing={2}

@@ -15,6 +15,7 @@ export const flexJustEnd = { ...flexStyles, justifyContent: "flex-end" };
 export const flexJustStart = { ...flexStyles, justifyContent: "flex-start" };
 export const flexItemCentered = { ...flexStyles, alignItems: "center" };
 export const flexItemStart = { ...flexStyles, alignItems: "flex-start" };
+export const flexItemEnd = { ...flexStyles, alignItems: "flex-end" };
 export const flexCentered = {
   ...flexJustCentered,
   ...flexItemCentered,

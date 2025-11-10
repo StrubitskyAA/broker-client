@@ -18,6 +18,10 @@ import useDebounce from "../../../../hooks/useDebounce";
 import { groupListByCode } from "../../../../helpers/general-helpers";
 
 import { infoTextStyles } from "../../../../styles/text-styles";
+import {
+  searchButtonStyles,
+  searchStyles,
+} from "../../../../styles/elements-styles";
 
 const CurrencySearchFilter: FC<{
   setSearchText: Dispatch<SetStateAction<string>>;
@@ -54,20 +58,12 @@ const CurrencySearchFilter: FC<{
 
   return (
     <>
-      <Typography sx={infoTextStyles}>
+      <Typography sx={{ ...infoTextStyles, lineHeight: "16px" }}>
         Choose a currency from the list below or use the search bar to find a
         specific currency.
       </Typography>
-      <Box
-        component="form"
-        sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          width: 400,
-        }}
-      >
-        <IconButton sx={{ p: "10px" }} aria-label="menu">
+      <Box component="form" sx={searchStyles}>
+        <IconButton sx={searchButtonStyles} aria-label="menu">
           <img src={searchIcon} alt="searchIcon" />
         </IconButton>
         <InputBase

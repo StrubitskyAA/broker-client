@@ -3,11 +3,13 @@ import _ from "lodash";
 
 import {
   dataAttributeName,
+  hoveredClassName,
   keyboardReactions,
+  selectedClassName,
 } from "../../../../constants/general-constants";
 
 const calculateHeightForScrolling = (height?: number) =>
-  height ? height / 2 - 2 : 0;
+  height ? (height + 15) / 2 : 0;
 
 const checkIsListButtonItem = (element: HTMLElement) =>
   element.classList.contains("MuiListItemButton-root");
@@ -72,3 +74,12 @@ export const onCurrencyListKeyDown =
       });
     }
   };
+
+export const getCurrencyItemClassNames = ({
+  isSelected,
+  isHovered,
+}: {
+  isSelected?: boolean;
+  isHovered?: boolean;
+}) =>
+  `${isSelected ? selectedClassName : ""} ${isHovered ? hoveredClassName : ""}`;

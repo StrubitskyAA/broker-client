@@ -1,6 +1,8 @@
-import { TextField } from "@mui/material";
+import { InputBase } from "@mui/material";
 import { ChangeEvent, FC, KeyboardEvent, useCallback } from "react";
 import { NumericFormat } from "react-number-format";
+
+import { numberInputStyles } from "../../../styles/elements-styles";
 
 const NumberInput: FC<{
   value: string;
@@ -29,10 +31,10 @@ const NumberInput: FC<{
       value={value}
       onKeyDown={keyDownHandler}
       onChange={handleChange}
-      customInput={TextField}
+      customInput={InputBase}
       thousandSeparator=" "
       valueIsNumericString
-      variant="standard"
+      sx={{ ...numberInputStyles }}
     />
   );
 };

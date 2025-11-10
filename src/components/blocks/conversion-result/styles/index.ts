@@ -2,46 +2,40 @@ import colors from "../../../../constants/colors";
 
 export const rateTextStyles = {
   fontWeight: 600,
-  fontStyle: "Semi Bold",
   fontSize: "12px",
   lineHeight: "100%",
-  letterSpacing: "0%",
 };
 export const rateLabelStyles = {
   ...rateTextStyles,
   color: colors.grey600,
+  lineHeight: "24px",
 };
 export const rateAttantionStyles = {
   fontWeight: 400,
-  fontStyle: "Regular",
   fontSize: "12px",
-  lineHeight: "100%",
-  letterSpacing: "0%",
   textAlign: "center",
   color: colors.grey600,
+  p: 1,
+  lineHeight: "16px",
 };
 export const resultTitleStyles = {
   fontWeight: 600,
-  fontStyle: "Semi Bold",
   fontSize: "18px",
   lineHeight: "100%",
-  letterSpacing: "0%",
   color: colors.black,
+  mb: "24px",
 };
 export const resultStyles = {
   fontWeight: 700,
-  fontStyle: "Bold",
   fontSize: "24px",
   lineHeight: "100%",
-  letterSpacing: "0%",
   textAlign: "center",
+  mb: "8px",
 };
 export const resultConversionStyles = {
   fontWeight: 500,
-  fontStyle: "Medium",
   fontSize: "12px",
   lineHeight: "100%",
-  letterSpacing: "0%",
   color: colors.grey600,
   textAlign: "center",
 };

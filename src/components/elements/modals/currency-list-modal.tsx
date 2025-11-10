@@ -1,5 +1,6 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { FC, useCallback, useContext, useRef, useState } from "react";
+import _ from "lodash";
 
 import { currencyListType } from "../../../ts-types";
 
@@ -7,12 +8,14 @@ import CloseButton from "../buttons/close-button";
 import { CurrencyListContext } from "../../blocks/app";
 import CurrencySearchFilter from "./currency-list-components/currency-search";
 import CurrencyList from "./currency-list-components/currency-list";
+import InfoMessage from "../info/info-message";
 
 import { modalBodyStyles, modalStyles } from "./styles/modal-styles";
 import {
   flexItemCentered,
   flexSpaceBetween,
 } from "../../../styles/flex-styles";
+import { infoTextStyles } from "../../../styles/text-styles";
 
 const CurrencyListModal: FC<{
   code: string;
@@ -39,7 +42,7 @@ const CurrencyListModal: FC<{
     <Modal open={isOpen} onClose={onClose} ref={modalRef}>
       <Box sx={modalStyles}>
         <Box sx={{ ...flexItemCentered, ...flexSpaceBetween }}>
-          <Typography>Select currency</Typography>
+          <Typography component="h3">Select currency</Typography>
           <CloseButton onClose={onClose} />
         </Box>
         <CurrencySearchFilter
@@ -49,13 +52,20 @@ const CurrencyListModal: FC<{
           setCurrencyFilteredList={setCurrencyFilteredList}
         />
         <Box sx={modalBodyStyles} ref={scrolContainerRef}>
-          <CurrencyList
-            currencyList={currencyFilteredList}
-            onSelect={currencyItemSelectHandler}
-            selectedCode={code}
-            modalRef={modalRef}
-            scrolContainerRef={scrolContainerRef}
-          />
+          {_.isEmpty(currencyFilteredList) ? (
+            <InfoMessage
+              label="There is no list of currencies to display."
+              sx={{ ...infoTextStyles, padding: "45px 0" }}
+            />
+          ) : (
+            <CurrencyList
+              currencyList={currencyFilteredList}
+              onSelect={currencyItemSelectHandler}
+              selectedCode={code}
+              modalRef={modalRef}
+              scrolContainerRef={scrolContainerRef}
+            />
+          )}
         </Box>
       </Box>
     </Modal>
