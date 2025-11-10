@@ -1,22 +1,27 @@
 import { Box, Grid } from "@mui/material";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 
 import { userPreferenciesStorageKey } from "../../../constants/general-constants";
 
-import { setToStorage } from "../conversion-result/helpers";
+import {
+  convertIndexesToCoddes,
+  setToStorage,
+} from "../conversion-result/helpers";
 import { getIndexFromStorage } from "./helpers/wrapper-helpers";
 
 import ControlWrapper from "../conversion-control/control-wrapper";
 import ResultWrapper from "../conversion-result/result-wrapper";
+import { CurrencyListContext } from "../app";
 
 import { flexFullStyles, flexCentered } from "../../../styles/flex-styles";
 
 const Wrapper: FC = () => {
+  const currencyList = useContext(CurrencyListContext);
   const [currencyFromIndex, setCurrencyFromIndex] = useState<number>(
-    getIndexFromStorage("indexFrom", 0)
+    getIndexFromStorage("codeFrom", currencyList, "USD")
   );
   const [currencyToIndex, setCurrencyToIndex] = useState<number>(
-    getIndexFromStorage("indexTo", 2)
+    getIndexFromStorage("codeTo", currencyList, "EUR")
   );
   const [amount, setAmount] = useState<string>("1");
 
@@ -26,11 +31,24 @@ const Wrapper: FC = () => {
   );
 
   useEffect(() => {
-    setToStorage(userPreferenciesStorageKey, {
-      indexFrom: currencyFromIndex,
-      indexTo: currencyToIndex,
-    });
-  }, [currencyFromIndex, currencyToIndex]);
+    setToStorage(
+      userPreferenciesStorageKey,
+      convertIndexesToCoddes(
+        {
+          indexFrom: currencyFromIndex,
+          indexTo: currencyToIndex,
+        },
+        currencyList
+      )
+    );
+    // eslint-disable-next-line
+  }, [currencyFromIndex, currencyToIndex, currencyList.length]);
+
+  useEffect(() => {
+    setCurrencyFromIndex(getIndexFromStorage("codeFrom", currencyList, "USD"));
+    setCurrencyToIndex(getIndexFromStorage("codeTo", currencyList, "EUR"));
+    // eslint-disable-next-line
+  }, [currencyList.length]);
 
   return (
     <Box sx={{ ...flexFullStyles, ...flexCentered }}>

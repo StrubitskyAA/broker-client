@@ -23,6 +23,7 @@ const CurrencyListModal: FC<{
   onClose: () => void;
 }> = ({ index, isOpen, onChange, onClose }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const scrolContainerRef = useRef<HTMLDivElement | null>(null);
   const currencyList = useContext(CurrencyListContext);
   const [searchText, setSearchText] = useState<string>("");
   const [currencyFilteredList, setCurrencyFilteredList] =
@@ -60,12 +61,13 @@ const CurrencyListModal: FC<{
           index={index}
           setCurrencyFilteredList={setCurrencyFilteredList}
         />
-        <Box sx={modalBodyStyles}>
+        <Box sx={modalBodyStyles} ref={scrolContainerRef}>
           <CurrencyList
             currencyList={currencyFilteredList}
             onSelect={currencyItemSelectHandler}
             selectedIndex={adaptedCurrencyIndex}
             modalRef={modalRef}
+            scrolContainerRef={scrolContainerRef}
           />
         </Box>
       </Box>

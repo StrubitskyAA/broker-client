@@ -16,7 +16,14 @@ const CurrencyList: FC<{
   onSelect: (index: number) => void;
   selectedIndex: number;
   modalRef: RefObject<HTMLDivElement | null>;
-}> = ({ currencyList, onSelect, selectedIndex, modalRef }) => {
+  scrolContainerRef: RefObject<HTMLDivElement | null>;
+}> = ({
+  currencyList,
+  onSelect,
+  selectedIndex,
+  modalRef,
+  scrolContainerRef,
+}) => {
   const containerRef = useRef<HTMLUListElement | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null);
   const mouseMoveHandler = useCallback(
@@ -25,8 +32,13 @@ const CurrencyList: FC<{
   );
   const mouseKeyPressHandler = useCallback(
     (e: KeyboardEvent) =>
-      onCurrencyListKeyDown(setHoveredIndex, onSelect, currencyList.length)(e),
-    [setHoveredIndex, onSelect, currencyList.length]
+      onCurrencyListKeyDown({
+        setIndex: setHoveredIndex,
+        onSelect,
+        length: currencyList.length,
+        scrolContainerRef,
+      })(e),
+    [setHoveredIndex, onSelect, currencyList.length, scrolContainerRef]
   );
 
   useOnce(() => {
@@ -42,16 +54,18 @@ const CurrencyList: FC<{
 
   return (
     <List ref={containerRef}>
-      {currencyList.map((currencyInfo, i) => (
-        <CurrencyItemButton
-          key={currencyInfo.code}
-          currencyInfo={currencyList[i]}
-          index={i}
-          onClick={onSelect}
-          isSelected={selectedIndex === i}
-          isHovered={hoveredIndex === i}
-        />
-      ))}
+      {currencyList.map((currencyInfo, i) => {
+        return (
+          <CurrencyItemButton
+            key={currencyInfo.code}
+            currencyInfo={currencyList[i]}
+            index={i}
+            onClick={onSelect}
+            isSelected={selectedIndex === i}
+            isHovered={hoveredIndex === i}
+          />
+        );
+      })}
     </List>
   );
 };

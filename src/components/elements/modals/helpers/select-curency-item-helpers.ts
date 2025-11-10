@@ -1,10 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, RefObject, SetStateAction } from "react";
 import _ from "lodash";
 
 import {
   dataAttributeName,
   keyboardReactions,
 } from "../../../../constants/general-constants";
+
+const calculateHeightForScrolling = (height?: number) =>
+  height ? height / 2 - 2 : 0;
 
 const checkIsListButtonItem = (element: HTMLElement) =>
   element.classList.contains("MuiListItemButton-root");
@@ -33,11 +36,17 @@ export const onCurrencyListMouseMove =
   };
 
 export const onCurrencyListKeyDown =
-  (
-    setIndex: Dispatch<SetStateAction<number | null>>,
-    onSelect: (index: number) => void,
-    length: number
-  ) =>
+  ({
+    setIndex,
+    onSelect,
+    length,
+    scrolContainerRef,
+  }: {
+    setIndex: Dispatch<SetStateAction<number | null>>;
+    onSelect: (index: number) => void;
+    length: number;
+    scrolContainerRef: RefObject<HTMLDivElement | null>;
+  }) =>
   (e: KeyboardEvent) => {
     if (keyboardReactions[e.key]) {
       e.stopPropagation();
@@ -47,6 +56,17 @@ export const onCurrencyListKeyDown =
         const newIndex = keyboardReactions[e.key](index, length);
         if (newIndex === null) {
           onSelect(index);
+        } else if (index !== newIndex) {
+          const heightItem = (
+            scrolContainerRef.current?.querySelector(
+              `[${dataAttributeName}="${index}"]`
+            ) as HTMLElement
+          )?.offsetHeight;
+          scrolContainerRef.current?.scrollBy(
+            0,
+            calculateHeightForScrolling(heightItem) *
+              (index < newIndex ? 1 : -1)
+          );
         }
         return newIndex;
       });

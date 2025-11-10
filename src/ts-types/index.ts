@@ -37,6 +37,11 @@ export type dateStorageType = {
 };
 
 export type preferencesStorageType = {
+  codeFrom: string;
+  codeTo: string;
+};
+
+export type setPreferencesStorageType = {
   indexFrom: number;
   indexTo: number;
 };

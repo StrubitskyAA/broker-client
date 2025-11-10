@@ -1,9 +1,11 @@
 import _ from "lodash";
 
 import {
+  currencyInfoType,
   currencyRatesType,
   dateStorageType,
   preferencesStorageType,
+  setPreferencesStorageType,
 } from "../../../../ts-types";
 
 type exchangeRateFunctionPropTypes = {
@@ -21,6 +23,14 @@ const getExchangeRate = ({
 
 export const exchangedRate = (props: exchangeRateFunctionPropTypes) =>
   getExchangeRate(props).toFixed(6);
+
+export const convertIndexesToCoddes = (
+  values: setPreferencesStorageType,
+  currencyList: currencyInfoType[]
+): preferencesStorageType => ({
+  codeFrom: currencyList[values.indexFrom].code,
+  codeTo: currencyList[values.indexTo].code,
+});
 
 export const getConversionResult = ({
   currencyRates,

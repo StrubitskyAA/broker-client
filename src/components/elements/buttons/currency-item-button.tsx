@@ -44,7 +44,8 @@ const CurrencyItemButton: FC<CurrencyItemButtonPropsType> = memo(
   ) =>
     prevProps.isSelected === nextProps.isSelected &&
     prevProps.isHovered === nextProps.isHovered &&
-    prevProps.currencyInfo.code === nextProps.currencyInfo.code
+    prevProps.currencyInfo.code === nextProps.currencyInfo.code &&
+    prevProps.index === nextProps.index
 );
 
 export default CurrencyItemButton;
