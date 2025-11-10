@@ -1,18 +1,18 @@
 import { Grid, Typography } from "@mui/material";
 import { FC } from "react";
 
-import { currensyControlType } from "../../../../ts-types";
+import { currencyControlType } from "../../../../ts-types";
 
 import CurrencySelector from "./currency-selector";
 import ReshuffleButton from "../../../elements/buttons/reshuffle-button";
 
 import { inputLabelStyles } from "../../../../styles/text-styles";
 
-const CurrencySelectionBlock: FC<currensyControlType> = ({
-  currencyFromIndex,
-  setCurrencyFromIndex,
-  currencyToIndex,
-  setCurrencyToIndex,
+const CurrencySelectionBlock: FC<currencyControlType> = ({
+  currencyFromCode,
+  setCurrencyFromCode,
+  currencyToCode,
+  setCurrencyToCode,
 }) => (
   <>
     <Grid size={{ xs: 12, sm: 5 }}>
@@ -20,14 +20,14 @@ const CurrencySelectionBlock: FC<currensyControlType> = ({
         From
       </Typography>
       <CurrencySelector
-        currencyIndex={currencyFromIndex}
-        onCurrencyIndexChange={setCurrencyFromIndex}
+        currencyCode={currencyFromCode}
+        onCurrencyCodeChange={setCurrencyFromCode}
       />
     </Grid>
     <Grid size={{ xs: 12, sm: 2 }}>
       <ReshuffleButton
-        values={[currencyFromIndex, currencyToIndex]}
-        setValuesArray={[setCurrencyFromIndex, setCurrencyToIndex]}
+        values={[currencyFromCode, currencyToCode]}
+        setValuesArray={[setCurrencyFromCode, setCurrencyToCode]}
       />
     </Grid>
     <Grid size={{ xs: 12, sm: 5 }}>
@@ -35,8 +35,8 @@ const CurrencySelectionBlock: FC<currensyControlType> = ({
         To
       </Typography>
       <CurrencySelector
-        currencyIndex={currencyToIndex}
-        onCurrencyIndexChange={setCurrencyToIndex}
+        currencyCode={currencyToCode}
+        onCurrencyCodeChange={setCurrencyToCode}
       />
     </Grid>
   </>

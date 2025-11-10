@@ -18,10 +18,10 @@ import {
 import { rateAttantionStyles, resultTitleStyles } from "./styles";
 
 const ResultWrapper: FC<{
-  currencyFromIndex: number;
-  currencyToIndex: number;
+  currencyFromCode: string;
+  currencyToCode: string;
   amount: string;
-}> = ({ currencyFromIndex, currencyToIndex, amount }) => {
+}> = ({ currencyFromCode, currencyToCode, amount }) => {
   const { isFetching, currencyRates }: currencyRatesStateType = useAppSelector(
     currencyRatesStoreSelector
   );
@@ -34,14 +34,14 @@ const ResultWrapper: FC<{
         <>
           <ResultValueBlock
             amount={amount}
-            currencyFromIndex={currencyFromIndex}
-            currencyToIndex={currencyToIndex}
+            currencyFromCode={currencyFromCode}
+            currencyToCode={currencyToCode}
             currencyRates={currencyRates}
           />
           <Divider sx={dividerStyles} />
           <ExchangeBlock
-            currencyFromIndex={currencyFromIndex}
-            currencyToIndex={currencyToIndex}
+            currencyFromCode={currencyFromCode}
+            currencyToCode={currencyToCode}
             currencyRates={currencyRates}
           />
         </>

@@ -1,27 +1,22 @@
 import { Box, Grid } from "@mui/material";
-import { FC, useCallback, useContext, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 import { userPreferenciesStorageKey } from "../../../constants/general-constants";
 
-import {
-  convertIndexesToCoddes,
-  setToStorage,
-} from "../conversion-result/helpers";
-import { getIndexFromStorage } from "./helpers/wrapper-helpers";
+import { setToStorage } from "../conversion-result/helpers";
+import { getCodeFromStorage } from "./helpers/wrapper-helpers";
 
 import ControlWrapper from "../conversion-control/control-wrapper";
 import ResultWrapper from "../conversion-result/result-wrapper";
-import { CurrencyListContext } from "../app";
 
 import { flexFullStyles, flexCentered } from "../../../styles/flex-styles";
 
 const Wrapper: FC = () => {
-  const currencyList = useContext(CurrencyListContext);
-  const [currencyFromIndex, setCurrencyFromIndex] = useState<number>(
-    getIndexFromStorage("codeFrom", currencyList, "USD")
+  const [currencyFromCode, setCurrencyFromCode] = useState<string>(
+    getCodeFromStorage("codeFrom", "USD")
   );
-  const [currencyToIndex, setCurrencyToIndex] = useState<number>(
-    getIndexFromStorage("codeTo", currencyList, "EUR")
+  const [currencyToCode, setCurrencyToCode] = useState<string>(
+    getCodeFromStorage("codeTo", "EUR")
   );
   const [amount, setAmount] = useState<string>("1");
 
@@ -31,24 +26,11 @@ const Wrapper: FC = () => {
   );
 
   useEffect(() => {
-    setToStorage(
-      userPreferenciesStorageKey,
-      convertIndexesToCoddes(
-        {
-          indexFrom: currencyFromIndex,
-          indexTo: currencyToIndex,
-        },
-        currencyList
-      )
-    );
-    // eslint-disable-next-line
-  }, [currencyFromIndex, currencyToIndex, currencyList.length]);
-
-  useEffect(() => {
-    setCurrencyFromIndex(getIndexFromStorage("codeFrom", currencyList, "USD"));
-    setCurrencyToIndex(getIndexFromStorage("codeTo", currencyList, "EUR"));
-    // eslint-disable-next-line
-  }, [currencyList.length]);
+    setToStorage(userPreferenciesStorageKey, {
+      codeFrom: currencyFromCode,
+      codeTo: currencyToCode,
+    });
+  }, [currencyFromCode, currencyToCode]);
 
   return (
     <Box sx={{ ...flexFullStyles, ...flexCentered }}>
@@ -59,18 +41,18 @@ const Wrapper: FC = () => {
       >
         <Grid size={{ xs: 12, sm: 8 }}>
           <ControlWrapper
-            currencyFromIndex={currencyFromIndex}
-            setCurrencyFromIndex={setCurrencyFromIndex}
-            currencyToIndex={currencyToIndex}
-            setCurrencyToIndex={setCurrencyToIndex}
+            currencyFromCode={currencyFromCode}
+            setCurrencyFromCode={setCurrencyFromCode}
+            currencyToCode={currencyToCode}
+            setCurrencyToCode={setCurrencyToCode}
             onAmountChange={amountChangeHandler}
             amount={amount}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
           <ResultWrapper
-            currencyFromIndex={currencyFromIndex}
-            currencyToIndex={currencyToIndex}
+            currencyFromCode={currencyFromCode}
+            currencyToCode={currencyToCode}
             amount={amount}
           />
         </Grid>

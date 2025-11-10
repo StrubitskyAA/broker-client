@@ -1,16 +1,18 @@
 import { alertColorsEnum } from "../constants/colors";
 
-export type currensyControlType = {
-  currencyFromIndex: number;
-  setCurrencyFromIndex: (index: number) => void;
-  currencyToIndex: number;
-  setCurrencyToIndex: (index: number) => void;
+export type currencyControlType = {
+  currencyFromCode: string;
+  setCurrencyFromCode: (code: string) => void;
+  currencyToCode: string;
+  setCurrencyToCode: (Ccde: string) => void;
 };
 
 export type amountInputType = {
   amount: string;
   onAmountChange: (value: string) => void;
 };
+
+export type currencyListType = { [code: string]: currencyInfoType };
 
 export type currencyInfoType = {
   name: string;

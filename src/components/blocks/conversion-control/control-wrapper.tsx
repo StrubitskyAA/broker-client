@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useAppSelector } from "../../../store/hooks/redux-hooks";
 import { currencyRateFetchingStatusSelector } from "../../../store/selectors";
 
-import { amountInputType, currensyControlType } from "../../../ts-types";
+import { amountInputType, currencyControlType } from "../../../ts-types";
 
 import AmountInput from "./components/amount-input";
 import CurrencySelectionBlock from "./components/currency-selection-block";
@@ -12,7 +12,7 @@ import OutPreloader from "../../elements/preloader/uot-preloader";
 
 import { blockWrapperStyles } from "../../../styles/elements-styles";
 
-const ControlWrapper: FC<currensyControlType & amountInputType> = ({
+const ControlWrapper: FC<currencyControlType & amountInputType> = ({
   onAmountChange,
   amount,
   ...props

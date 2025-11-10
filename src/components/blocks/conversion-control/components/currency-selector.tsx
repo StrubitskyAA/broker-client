@@ -8,9 +8,9 @@ import { CurrencyListContext } from "../../app";
 import { selectorStyles } from "../../../../styles/elements-styles";
 
 const CurrencySelector: FC<{
-  currencyIndex: number;
-  onCurrencyIndexChange: (index: number) => void;
-}> = ({ currencyIndex, onCurrencyIndexChange }) => {
+  currencyCode: string;
+  onCurrencyCodeChange: (code: string) => void;
+}> = ({ currencyCode, onCurrencyCodeChange }) => {
   const currencyList = useContext(CurrencyListContext);
   const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false);
   const selectorCloseHandler = useCallback(
@@ -18,22 +18,22 @@ const CurrencySelector: FC<{
     [setIsSelectorOpen]
   );
   const selectorOpenHandler = useCallback(
-    (index?: number) => setIsSelectorOpen(true),
+    (code?: string) => setIsSelectorOpen(true),
     [setIsSelectorOpen]
   );
 
   return (
     <>
       <CurrencyListModal
-        index={currencyIndex}
+        code={currencyCode}
         isOpen={isSelectorOpen}
-        onChange={onCurrencyIndexChange}
+        onChange={onCurrencyCodeChange}
         onClose={selectorCloseHandler}
       />
       <List component="nav" sx={selectorStyles}>
         <CurrencyItemButton
-          currencyInfo={currencyList[currencyIndex]}
-          index={currencyIndex}
+          currencyInfo={currencyList[currencyCode]}
+          code={currencyCode}
           onClick={selectorOpenHandler}
         />
       </List>

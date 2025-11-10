@@ -5,21 +5,31 @@ import { currencyInfoType } from "../../../ts-types";
 
 import checkItem from "../../../icons/check-rounded.svg";
 
+import { checkIsEqualCurrencyButtonProps } from "../../blocks/conversion-result/helpers/memoization";
+
 import { currencyAvatarStyles } from "../../../styles/elements-styles";
 
-type CurrencyItemButtonPropsType = {
+export type currencyItemButtonPropsType = {
   currencyInfo: currencyInfoType;
-  onClick: (index: number) => void;
-  index: number;
+  onClick: (code: string) => void;
+  code: string;
+  index?: number;
   isSelected?: boolean;
   isHovered?: boolean;
 };
 
-const CurrencyItemButton: FC<CurrencyItemButtonPropsType> = memo(
-  function Inner({ currencyInfo, onClick, index, isSelected, isHovered }) {
+const CurrencyItemButton: FC<currencyItemButtonPropsType> = memo(
+  function Inner({
+    currencyInfo,
+    onClick,
+    code,
+    index,
+    isSelected,
+    isHovered,
+  }) {
     const buttonClickHandler = useCallback(() => {
-      onClick(index);
-    }, [onClick, index]);
+      onClick(code);
+    }, [onClick, code]);
 
     return (
       <ListItemButton
@@ -38,14 +48,7 @@ const CurrencyItemButton: FC<CurrencyItemButtonPropsType> = memo(
       </ListItemButton>
     );
   },
-  (
-    prevProps: CurrencyItemButtonPropsType,
-    nextProps: CurrencyItemButtonPropsType
-  ) =>
-    prevProps.isSelected === nextProps.isSelected &&
-    prevProps.isHovered === nextProps.isHovered &&
-    prevProps.currencyInfo.code === nextProps.currencyInfo.code &&
-    prevProps.index === nextProps.index
+  checkIsEqualCurrencyButtonProps
 );
 
 export default CurrencyItemButton;

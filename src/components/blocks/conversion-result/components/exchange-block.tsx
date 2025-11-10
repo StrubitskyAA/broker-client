@@ -1,4 +1,4 @@
-import { FC, memo, useContext } from "react";
+import { FC, memo } from "react";
 
 import { currencyRatesType } from "../../../../ts-types";
 
@@ -6,38 +6,35 @@ import { checkIsEqualExchangeProps } from "../helpers/memoization";
 import { exchangedRate } from "../helpers";
 
 import ExchangeLine from "./exchange-line";
-import { CurrencyListContext } from "../../app";
 
 export type exchangeBlockPropsType = {
-  currencyFromIndex: number;
-  currencyToIndex: number;
+  currencyFromCode: string;
+  currencyToCode: string;
   currencyRates: currencyRatesType;
 };
 
 const ExchangeBlock: FC<exchangeBlockPropsType> = memo(function Inner({
-  currencyFromIndex,
-  currencyToIndex,
+  currencyFromCode,
+  currencyToCode,
   currencyRates,
 }) {
-  const currencyList = useContext(CurrencyListContext);
-
   return (
     <>
       <ExchangeLine
         label="Exchange Rate"
-        value={`1 ${currencyList[currencyFromIndex].code} = ${exchangedRate({
+        value={`1 ${currencyFromCode} = ${exchangedRate({
           currencyRates,
-          fromCode: currencyList[currencyFromIndex].code,
-          toCode: currencyList[currencyToIndex].code,
-        })} ${currencyList[currencyToIndex].code}`}
+          fromCode: currencyFromCode,
+          toCode: currencyToCode,
+        })} ${currencyToCode}`}
       />
       <ExchangeLine
         label="Inverse Rate"
-        value={`1 ${currencyList[currencyToIndex].code} = ${exchangedRate({
+        value={`1 ${currencyToCode} = ${exchangedRate({
           currencyRates,
-          fromCode: currencyList[currencyToIndex].code,
-          toCode: currencyList[currencyFromIndex].code,
-        })} ${currencyList[currencyFromIndex].code}`}
+          fromCode: currencyToCode,
+          toCode: currencyFromCode,
+        })} ${currencyFromCode}`}
       />
     </>
   );

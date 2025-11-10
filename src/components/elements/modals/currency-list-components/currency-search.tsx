@@ -9,31 +9,22 @@ import {
 } from "react";
 import _ from "lodash";
 
-import { currencyInfoType } from "../../../../ts-types";
+import { currencyListType } from "../../../../ts-types";
 
 import searchIcon from "../../../../icons/search-icon.svg";
 import { searchDelayTime } from "../../../../constants/time";
 
-import { getCurrencyIndexAdapter } from "../helpers/conversion-helpers";
 import useDebounce from "../../../../hooks/useDebounce";
+import { groupListByCode } from "../../../../helpers/general-helpers";
 
 import { infoTextStyles } from "../../../../styles/text-styles";
 
-const CurrensySearchFilter: FC<{
+const CurrencySearchFilter: FC<{
   setSearchText: Dispatch<SetStateAction<string>>;
   searchText: string;
-  currencyList: currencyInfoType[];
-  setAdaptedCurrencyIndex: Dispatch<SetStateAction<number>>;
-  index: number;
-  setCurrencyFilteredList: Dispatch<SetStateAction<currencyInfoType[]>>;
-}> = ({
-  searchText,
-  setSearchText,
-  currencyList,
-  setAdaptedCurrencyIndex,
-  index,
-  setCurrencyFilteredList,
-}) => {
+  currencyList: currencyListType;
+  setCurrencyFilteredList: Dispatch<SetStateAction<currencyListType>>;
+}> = ({ searchText, setSearchText, currencyList, setCurrencyFilteredList }) => {
   const searchTextChangeHandler = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
       setSearchText(value);
@@ -44,17 +35,17 @@ const CurrensySearchFilter: FC<{
   const debouncedSearchText = useDebounce(searchText, searchDelayTime);
   const filterCurencyListHandler = useCallback(
     (text: string) => {
-      const newFilteredList = currencyList.filter(
-        (curencyInfo) =>
-          _.toLower(curencyInfo.name).includes(_.toLower(text)) ||
-          _.toLower(curencyInfo.code).includes(_.toLower(text))
+      setCurrencyFilteredList(
+        groupListByCode(
+          Object.values(currencyList).filter(
+            (curencyInfo) =>
+              _.toLower(curencyInfo.name).includes(_.toLower(text)) ||
+              _.toLower(curencyInfo.code).includes(_.toLower(text))
+          )
+        )
       );
-      setAdaptedCurrencyIndex(
-        getCurrencyIndexAdapter(newFilteredList, currencyList, index, true)
-      );
-      setCurrencyFilteredList(newFilteredList);
     },
-    [index, currencyList, setAdaptedCurrencyIndex, setCurrencyFilteredList]
+    [currencyList, setCurrencyFilteredList]
   );
 
   useEffect(() => {
@@ -91,4 +82,4 @@ const CurrensySearchFilter: FC<{
   );
 };
 
-export default CurrensySearchFilter;
+export default CurrencySearchFilter;

@@ -16,8 +16,8 @@ export type resultValueBlockPropsType = exchangeBlockPropsType & {
 };
 
 const ResultValueBlock: FC<resultValueBlockPropsType> = memo(function Inner({
-  currencyFromIndex,
-  currencyToIndex,
+  currencyFromCode,
+  currencyToCode,
   amount,
   currencyRates,
 }) {
@@ -26,16 +26,16 @@ const ResultValueBlock: FC<resultValueBlockPropsType> = memo(function Inner({
   return (
     <>
       <Typography sx={resultStyles}>
-        {currencyList[currencyToIndex].symbolNative}
+        {currencyList[currencyToCode].symbolNative}
         {getConversionResult({
           currencyRates,
-          fromCode: currencyList[currencyFromIndex].code,
-          toCode: currencyList[currencyToIndex].code,
+          fromCode: currencyFromCode,
+          toCode: currencyToCode,
           amount,
         })}
       </Typography>
       <Typography sx={resultConversionStyles}>
-        {_.toNumber(amount) || 0} {currencyList[currencyFromIndex].code} =
+        {_.toNumber(amount) || 0} {currencyFromCode} =
       </Typography>
     </>
   );

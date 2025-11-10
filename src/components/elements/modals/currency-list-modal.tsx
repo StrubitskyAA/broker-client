@@ -1,13 +1,11 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { FC, useCallback, useContext, useRef, useState } from "react";
 
-import { currencyInfoType } from "../../../ts-types";
-
-import { getCurrencyIndexAdapter } from "./helpers/conversion-helpers";
+import { currencyListType } from "../../../ts-types";
 
 import CloseButton from "../buttons/close-button";
 import { CurrencyListContext } from "../../blocks/app";
-import CurrensySearchFilter from "./currency-list-components/currency-search";
+import CurrencySearchFilter from "./currency-list-components/currency-search";
 import CurrencyList from "./currency-list-components/currency-list";
 
 import { modalBodyStyles, modalStyles } from "./styles/modal-styles";
@@ -17,33 +15,24 @@ import {
 } from "../../../styles/flex-styles";
 
 const CurrencyListModal: FC<{
-  index: number;
+  code: string;
   isOpen: boolean;
-  onChange: (index: number) => void;
+  onChange: (code: string) => void;
   onClose: () => void;
-}> = ({ index, isOpen, onChange, onClose }) => {
+}> = ({ code, isOpen, onChange, onClose }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const scrolContainerRef = useRef<HTMLDivElement | null>(null);
   const currencyList = useContext(CurrencyListContext);
   const [searchText, setSearchText] = useState<string>("");
   const [currencyFilteredList, setCurrencyFilteredList] =
-    useState<currencyInfoType[]>(currencyList);
-  const [adaptedCurrencyIndex, setAdaptedCurrencyIndex] = useState<number>(
-    getCurrencyIndexAdapter(currencyList, currencyList, index, true)
-  );
+    useState<currencyListType>(currencyList);
 
   const currencyItemSelectHandler = useCallback(
-    (filteredListIndex: number) => {
-      setAdaptedCurrencyIndex(filteredListIndex);
-      const currencyIndex = getCurrencyIndexAdapter(
-        currencyFilteredList,
-        currencyList,
-        filteredListIndex
-      );
+    (newCode: string) => {
       onClose();
-      onChange(currencyIndex);
+      onChange(newCode);
     },
-    [onClose, onChange, currencyFilteredList, currencyList]
+    [onClose, onChange]
   );
 
   return (
@@ -53,19 +42,17 @@ const CurrencyListModal: FC<{
           <Typography>Select currency</Typography>
           <CloseButton onClose={onClose} />
         </Box>
-        <CurrensySearchFilter
+        <CurrencySearchFilter
           searchText={searchText}
           setSearchText={setSearchText}
           currencyList={currencyList}
-          setAdaptedCurrencyIndex={setAdaptedCurrencyIndex}
-          index={index}
           setCurrencyFilteredList={setCurrencyFilteredList}
         />
         <Box sx={modalBodyStyles} ref={scrolContainerRef}>
           <CurrencyList
             currencyList={currencyFilteredList}
             onSelect={currencyItemSelectHandler}
-            selectedIndex={adaptedCurrencyIndex}
+            selectedCode={code}
             modalRef={modalRef}
             scrolContainerRef={scrolContainerRef}
           />

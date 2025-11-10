@@ -4,8 +4,8 @@ import { FC, useCallback } from "react";
 import vectorIcon from "../../../icons/vector.svg";
 
 const ReshuffleButton: FC<{
-  values: [number, number];
-  setValuesArray: [(e: number) => void, (e: number) => void];
+  values: [string, string];
+  setValuesArray: [(code: string) => void, (code: string) => void];
 }> = ({ values, setValuesArray }) => {
   const reshuffleHandler = useCallback(() => {
     if (!!setValuesArray[0] && !!setValuesArray[1]) {
