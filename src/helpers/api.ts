@@ -1,9 +1,9 @@
-const mainUrl = "https://api.vatcomply.com/rates";
-// const alternativeUrl = "https://api.fxratesapi.com/latest";
+// const mainUrl = "https://api.vatcomply.com/rates";
+const alternativeUrl = "https://api.fxratesapi.com/latest";
 
 export const currencyRatesApi = {
   getCurrencyRates: async () => {
-    const response = await fetch(mainUrl, {
+    const response = await fetch(alternativeUrl, {
       method: "GET",
     });
 

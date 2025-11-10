@@ -1,6 +1,7 @@
 import colors from "../../../../constants/colors";
 
 export const rateTextStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   fontWeight: 600,
   fontSize: "12px",
   lineHeight: "100%",
@@ -11,6 +12,7 @@ export const rateLabelStyles = {
   lineHeight: "24px",
 };
 export const rateAttantionStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   fontWeight: 400,
   fontSize: "12px",
   textAlign: "center",
@@ -19,6 +21,7 @@ export const rateAttantionStyles = {
   lineHeight: "16px",
 };
 export const resultTitleStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   fontWeight: 600,
   fontSize: "18px",
   lineHeight: "100%",
@@ -26,6 +29,7 @@ export const resultTitleStyles = {
   mb: "24px",
 };
 export const resultStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   fontWeight: 700,
   fontSize: "24px",
   lineHeight: "100%",
@@ -33,6 +37,7 @@ export const resultStyles = {
   mb: "8px",
 };
 export const resultConversionStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   fontWeight: 500,
   fontSize: "12px",
   lineHeight: "100%",

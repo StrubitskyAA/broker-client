@@ -27,6 +27,7 @@ const colors = {
   grey600: "#737373",
   grey25: "#E5E5E5",
   grey50: "#D4D4D4",
+  warning: "#ed6c02",
 };
 
 export default colors;

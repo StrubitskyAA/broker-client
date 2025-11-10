@@ -10,6 +10,7 @@ import { fetchCurrencyRatesAction } from "../../../store/actions/redux-actions";
 
 import { lastUpdateFormat } from "../../../constants/time";
 import { breakPointCondition } from "../../../constants/general-constants";
+import colors from "../../../constants/colors";
 
 import { convertDateFormat } from "../../../helpers/general-helpers";
 
@@ -41,6 +42,15 @@ const Header: FC = () => {
       <Typography variant="body1" sx={infoTextStyles}>
         Get real time exchange rates
       </Typography>
+      {!navigator.onLine && (
+        <Typography
+          variant="body1"
+          sx={{ ...infoTextStyles, color: colors.warning }}
+        >
+          Using cached rates from{" "}
+          {convertDateFormat(lastUpdateDate, lastUpdateFormat)}
+        </Typography>
+      )}
       <Box
         sx={{
           ...flexCentered,

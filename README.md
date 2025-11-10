@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+Проект написан на TypeScript с использованием таких инструментов, как Create React App, Material UI,
+Redux, Redux-Saga, moment и lodash.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Чтобы собрать проект необходимо обновить версию Node до 20 и выше.
 
-## Available Scripts
+Для запуска на localhost необходимо перейти в корневую папку проекта, установить пакеты с помошью команды
 
-In the project directory, you can run:
+npm install
 
-### `npm start`
+А затем запустить команду
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+npm start
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Проект запустится на порте 3000 (http://localhost:3000)
 
-### `npm test`
+В качестве основного API для загрузки данных был выбран второй из предложенных вариантов
+https://api.fxratesapi.com/latest
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Для обработки запросов была использована Redux-Saga. Результаты записываются в Redux хранилище в виде
+{[currencyCode]: number}, где число - это курс валюты.
+D последующемберутся для рассчётов именно оттуда.
 
-### `npm run build`
+Список доступных для рассчётов валют берётся из приложенного к заданию файла currencies.json
+После загрузки данных список приводится к виду
+{ [currencyCode: string]: currencyInfo}, где currencyInfo - эта та информация, которая доступна в файле.
+Обновление данных с сервера осуществляется раз в 5 минут в фоновом режиме без отображения индикатора загрузки.
+При необходимости, пользователь может нажать кнопку принудительного обновления и в этом случае он увидет preloader.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+При выборе пользователем определённой валюты для конвертации курса, запоминается код этой валюты с помощью
+hook useState. Также эта информация дублируется в LocalStorage браузера. Это даёт возможность сохранить
+выбранные пользователем настройки рассчётов при перезагрузке страницы.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Для ограничения выбора символов пользователем в числовом поле Amount была использована библиотека
+react-number-format.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Для предоставления возможности выбора валюты с помощью клавиатуры, на модальное окно формы со списком валют
+вешается событие с помошью addEventListener ("onKeyPress"). При переборе валют с помощью клавиатуры также
+смещается scroll, чтобы подсвеченный элемент не исчезал из поля зрения.
+При уничтожении компонентов все навешенный события снимаются, чтобы не происходили утечки памяти.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Также в целях оптимизации работы приложения Все функции и часто меняющиеся компоненты были обёрнуты в hooks
+useCallback и memo.

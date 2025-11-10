@@ -1,5 +1,5 @@
 import { InputBase } from "@mui/material";
-import { ChangeEvent, FC, KeyboardEvent, useCallback } from "react";
+import { ChangeEvent, FC } from "react";
 import { NumericFormat } from "react-number-format";
 
 import { numberInputStyles } from "../../../styles/elements-styles";
@@ -11,25 +11,11 @@ const NumberInput: FC<{
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-  const keyDownHandler = useCallback(
-    (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === ",") {
-        const newValue = `${value}.`;
-        setValue(newValue);
-        const len = newValue.length;
-        setTimeout(
-          () => (event.target as HTMLInputElement).setSelectionRange(len, len),
-          10
-        );
-      }
-    },
-    [setValue, value]
-  );
 
   return (
     <NumericFormat
       value={value}
-      onKeyDown={keyDownHandler}
+      allowedDecimalSeparators={[",", "."]}
       onChange={handleChange}
       customInput={InputBase}
       thousandSeparator=" "

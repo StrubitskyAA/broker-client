@@ -18,6 +18,7 @@ export const indicatorContainerStyles = {
 };
 
 const inputStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   fontWeight: 500,
   fontSize: "14px",
   borderRadius: "8px",
@@ -28,6 +29,7 @@ const inputStyles = {
 };
 
 export const inputContainerStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   borderRadius: "8px",
   fontWeight: 400,
   fontSize: "14px",
@@ -74,6 +76,7 @@ export const blockWrapperStyles = {
 };
 
 export const currencyAvatarStyles = {
+  fontFamily: '"Inter", sans-serif !important',
   border: `1px solid ${colors.blue200}`,
   bgcolor: colors.blue25,
   color: colors.blue600,

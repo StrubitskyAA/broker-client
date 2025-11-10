@@ -10,6 +10,7 @@ export const modalStyles = {
   boxShadow: 24,
   p: 2,
   "& h3": {
+    fontFamily: '"Inter", sans-serif !important',
     fontWeight: 600,
     fontSize: "16px",
   },
