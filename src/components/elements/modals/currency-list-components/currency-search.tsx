@@ -12,7 +12,7 @@ import _ from "lodash";
 import { currencyListType } from "../../../../ts-types";
 
 import searchIcon from "../../../../icons/search-icon.svg";
-import { searchDelayTime } from "../../../../constants/time";
+import { searchDelayTime } from "../../../../constants/time-constants";
 
 import useDebounce from "../../../../hooks/useDebounce";
 import { groupListByCode } from "../../../../helpers/general-helpers";

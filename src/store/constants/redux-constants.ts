@@ -7,3 +7,7 @@ export enum infoActionTypesEnum {
   setInfoMessage = "@SET_INFO_MESSAGE",
   clearInfoMessage = "@CLEAR_INFO_MESSAGE",
 }
+export enum connectionActionTypesEnum {
+  checkConnection = "@CHECK_CONNECTION_STATUS",
+  setConnectionStatus = "@SET_CONNECTION_STATUS",
+}

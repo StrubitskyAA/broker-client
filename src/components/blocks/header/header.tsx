@@ -5,10 +5,13 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../store/hooks/redux-hooks";
-import { lastUpdateDateSelector } from "../../../store/selectors";
+import {
+  getConnectionStatusSelector,
+  lastUpdateDateSelector,
+} from "../../../store/selectors";
 import { fetchCurrencyRatesAction } from "../../../store/actions/redux-actions";
 
-import { lastUpdateFormat } from "../../../constants/time";
+import { lastUpdateFormat } from "../../../constants/time-constants";
 import { breakPointCondition } from "../../../constants/general-constants";
 import colors from "../../../constants/colors";
 
@@ -28,6 +31,7 @@ import { infoTextStyles, titleStyles } from "../../../styles/text-styles";
 const Header: FC = () => {
   const dispatch = useAppDispatch();
   const lastUpdateDate: string = useAppSelector(lastUpdateDateSelector);
+  const hasConnection = useAppSelector(getConnectionStatusSelector);
   const matches = useMediaQuery(breakPointCondition);
 
   const onRefreshClickHandler = useCallback(() => {
@@ -42,7 +46,7 @@ const Header: FC = () => {
       <Typography variant="body1" sx={infoTextStyles}>
         Get real time exchange rates
       </Typography>
-      {!navigator.onLine && (
+      {!hasConnection && (
         <Typography
           variant="body1"
           sx={{ ...infoTextStyles, color: colors.warning }}

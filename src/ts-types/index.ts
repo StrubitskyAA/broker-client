@@ -32,6 +32,9 @@ export interface infoInterface {
   infoText: string;
   infoType: alertColorsEnum;
 }
+export interface connectionInterface {
+  hasConnection: boolean;
+}
 
 export type dateStorageType = {
   rates: currencyRatesType;

@@ -1,14 +1,20 @@
 import { FC, useEffect, createContext, useState } from "react";
 import { Box } from "@mui/material";
 
-import { currencyRatesSelector } from "../../store/selectors";
+import {
+  currencyRatesSelector,
+  getConnectionStatusSelector,
+} from "../../store/selectors";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/redux-hooks";
-import { fetchCurrencyRatesAction } from "../../store/actions/redux-actions";
+import {
+  checkConnectionAction,
+  fetchCurrencyRatesAction,
+} from "../../store/actions/redux-actions";
 import { useOnce } from "../../hooks/useOnce";
 
 import { currencyListType } from "../../ts-types";
 
-import { contertCurrencyList, updateData } from "../../helpers/general-helpers";
+import { contertCurrencyList } from "../../helpers/general-helpers";
 
 import Header from "./header/header";
 import Wrapper from "./conversion-wrapper/wrapper";
@@ -21,19 +27,20 @@ import {
 
 export const CurrencyListContext = createContext(contertCurrencyList());
 
-const App: FC<{ hasConnection: boolean }> = ({ hasConnection }) => {
+const App: FC = () => {
   const curencyRates = useAppSelector(currencyRatesSelector);
   const [filteredList, setFilteredList] = useState<currencyListType>(
     contertCurrencyList()
   );
+  const hasConnection = useAppSelector(getConnectionStatusSelector);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchCurrencyRatesAction(hasConnection));
+    if (hasConnection) dispatch(fetchCurrencyRatesAction(hasConnection));
     // eslint-disable-next-line
   }, [hasConnection]);
 
   useOnce(() => {
-    updateData(dispatch);
+    dispatch(checkConnectionAction());
   }, true);
 
   useOnce(() => {

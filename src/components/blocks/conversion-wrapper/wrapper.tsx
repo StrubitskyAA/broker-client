@@ -6,8 +6,8 @@ import { userPreferenciesStorageKey } from "../../../constants/general-constants
 import { setToStorage } from "../conversion-result/helpers";
 import { getCodeFromStorage } from "./helpers/wrapper-helpers";
 
-import ControlWrapper from "../conversion-control/control-wrapper";
-import ResultWrapper from "../conversion-result/result-wrapper";
+import ControlWrapper from "../conversion-control";
+import ResultWrapper from "../conversion-result";
 
 import { flexCentered } from "../../../styles/flex-styles";
 

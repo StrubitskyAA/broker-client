@@ -13,3 +13,6 @@ export const currencyRateFetchingStatusSelector = (state: RootState) =>
   currencyRatesStoreSelector(state).isFetching;
 
 export const getInfoMessageSelector = (state: RootState) => state.info;
+
+export const getConnectionStatusSelector = (state: RootState) =>
+  state.connection.hasConnection;

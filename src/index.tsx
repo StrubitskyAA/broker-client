@@ -17,7 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <InfoAlert />
-      <App hasConnection={navigator.onLine} />
+      <App />
     </Provider>
   </React.StrictMode>
 );
