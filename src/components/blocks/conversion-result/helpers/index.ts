@@ -30,7 +30,7 @@ export const getConversionResult = ({
 }: { amount: string } & exchangeRateFunctionPropTypes) =>
   Math.round(
     getExchangeRate({ currencyRates, fromCode, toCode }) *
-      _.toNumber(amount) *
+      _.toNumber(amount.replace(",", ".")) *
       100
   ) / 100;
 

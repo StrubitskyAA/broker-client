@@ -18,7 +18,9 @@ const Wrapper: FC = () => {
   const [currencyToCode, setCurrencyToCode] = useState<string>(
     getCodeFromStorage("codeTo", "EUR")
   );
-  const [amount, setAmount] = useState<string>("1");
+  const [amount, setAmount] = useState<string>(
+    getCodeFromStorage("amount", "1")
+  );
 
   const amountChangeHandler = useCallback(
     (value: string) => setAmount(value),
@@ -29,8 +31,9 @@ const Wrapper: FC = () => {
     setToStorage(userPreferenciesStorageKey, {
       codeFrom: currencyFromCode,
       codeTo: currencyToCode,
+      amount: amount,
     });
-  }, [currencyFromCode, currencyToCode]);
+  }, [currencyFromCode, currencyToCode, amount]);
 
   return (
     <Box sx={{ ...flexCentered }}>

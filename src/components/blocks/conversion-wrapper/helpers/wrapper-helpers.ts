@@ -5,7 +5,7 @@ import { userPreferenciesStorageKey } from "../../../../constants/general-consta
 import { getFromStorage } from "../../conversion-result/helpers";
 
 export const getCodeFromStorage = (
-  name: "codeFrom" | "codeTo",
+  name: "codeFrom" | "codeTo" | "amount",
   defaultValue: string
 ) => {
   const preferences = getFromStorage(userPreferenciesStorageKey);

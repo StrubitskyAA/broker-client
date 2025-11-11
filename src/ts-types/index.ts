@@ -41,6 +41,7 @@ export type dateStorageType = {
 export type preferencesStorageType = {
   codeFrom: string;
   codeTo: string;
+  amount: string;
 };
 
 export type setPreferencesStorageType = {
