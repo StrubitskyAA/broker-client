@@ -1,7 +1,14 @@
 import { Box, Grid } from "@mui/material";
 import { FC, useCallback, useEffect, useState } from "react";
 
-import { userPreferenciesStorageKey } from "../../../constants/general-constants";
+import { useAppSelector } from "../../../store/hooks/redux-hooks";
+import { currencyRatesSelector } from "../../../store/selectors";
+
+import {
+  currencyFromDefaultCode,
+  currencyToDefaultCode,
+  userPreferenciesStorageKey,
+} from "../../../constants/general-constants";
 
 import { setToStorage } from "../conversion-result/helpers";
 import { getCodeFromStorage } from "./helpers/wrapper-helpers";
@@ -12,8 +19,9 @@ import ResultWrapper from "../conversion-result";
 import { flexCentered } from "../../../styles/flex-styles";
 
 const Wrapper: FC = () => {
+  const rates = useAppSelector(currencyRatesSelector);
   const [currencyFromCode, setCurrencyFromCode] = useState<string>(
-    getCodeFromStorage("codeFrom", "USD")
+    getCodeFromStorage("codeFrom", currencyFromDefaultCode)
   );
   const [currencyToCode, setCurrencyToCode] = useState<string>(
     getCodeFromStorage("codeTo", "EUR")
@@ -26,6 +34,15 @@ const Wrapper: FC = () => {
     (value: string) => setAmount(value),
     [setAmount]
   );
+
+  useEffect(() => {
+    if (rates && !rates?.[currencyFromCode])
+      setCurrencyFromCode(currencyFromDefaultCode);
+
+    if (rates && !rates?.[currencyToCode])
+      setCurrencyToCode(currencyToDefaultCode);
+    // eslint-disable-next-line
+  }, [!!rates, !!rates?.[currencyFromCode], !!rates?.[currencyToCode]]);
 
   useEffect(() => {
     setToStorage(userPreferenciesStorageKey, {

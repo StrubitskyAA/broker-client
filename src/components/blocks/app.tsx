@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 import {
   currencyRatesSelector,
-  getConnectionStatusSelector,
+  connectionStatusSelector,
 } from "../../store/selectors";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/redux-hooks";
 import {
@@ -32,7 +32,7 @@ const App: FC = () => {
   const [filteredList, setFilteredList] = useState<currencyListType>(
     contertCurrencyList()
   );
-  const hasConnection = useAppSelector(getConnectionStatusSelector);
+  const hasConnection = useAppSelector(connectionStatusSelector);
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (hasConnection) dispatch(fetchCurrencyRatesAction(hasConnection));

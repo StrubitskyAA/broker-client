@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { FC } from "react";
 
-import { getConnectionStatusSelector } from "../../../store/selectors";
+import { connectionStatusSelector } from "../../../store/selectors";
 
 import { useAppSelector } from "../../../store/hooks/redux-hooks";
 
@@ -9,7 +9,7 @@ import OnlineIndicator from "./online-indicator";
 import OfflineIndicator from "./offline-indicator";
 
 const ConnectionStateIndicator: FC<{ sx?: SxProps }> = ({ sx = {} }) => {
-  const hasConnection = useAppSelector(getConnectionStatusSelector);
+  const hasConnection = useAppSelector(connectionStatusSelector);
 
   return hasConnection ? (
     <OnlineIndicator sx={sx} />

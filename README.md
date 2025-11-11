@@ -1,42 +1,38 @@
-Проект написан на TypeScript с использованием таких инструментов, как Create React App, Material UI,
-Redux, Redux-Saga, moment и lodash.
+The project is written in TypeScript using tools such as Create React App, Material UI,
+Redux, Redux-Saga, moment, and lodash.
 
-Чтобы собрать проект необходимо обновить версию Node до 20 и выше.
+To build the project, you need to update Node to 20 or higher.
 
-Для запуска на localhost необходимо перейти в корневую папку проекта, установить пакеты с помошью команды
+To run on localhost, navigate to the project's root folder and install the packages using the command
 
 npm install
 
-А затем запустить команду
+Then run the command
 
 npm start
 
-Проект запустится на порте 3000 (http://localhost:3000)
+The project will run on port 3000 (http://localhost:3000).
 
-В качестве основного API для загрузки данных был выбран второй из предложенных вариантов
+The second of the proposed options was chosen as the primary API for loading data:
 https://api.fxratesapi.com/latest
 
-Для обработки запросов была использована Redux-Saga. Результаты записываются в Redux хранилище в виде
-{[currencyCode]: number}, где число - это курс валюты.
-D последующемберутся для рассчётов именно оттуда.
+Redux-Saga was used to process requests. The results are written to the Redux store as
+{[currencyCode]: number}, where number is the exchange rate.
+This data is subsequently used for calculations.
 
-Список доступных для рассчётов валют берётся из приложенного к заданию файла currencies.json
-После загрузки данных список приводится к виду
-{ [currencyCode: string]: currencyInfo}, где currencyInfo - эта та информация, которая доступна в файле.
-Обновление данных с сервера осуществляется раз в 5 минут в фоновом режиме без отображения индикатора загрузки.
-При необходимости, пользователь может нажать кнопку принудительного обновления и в этом случае он увидет preloader.
+The list of currencies available for calculation is taken from the currencies.json file attached to the task.
+After loading the data, the list is formatted as
+{ [currencyCode: string]: currencyInfo}, where currencyInfo is the information available in the file.
+Data is updated from the server every 5 minutes in the background without displaying a loading indicator.
+If necessary, the user can click the forced refresh button, in which case they will see a preloader.
 
-При выборе пользователем определённой валюты для конвертации курса, запоминается код этой валюты с помощью
-hook useState. Также эта информация дублируется в LocalStorage браузера. Это даёт возможность сохранить
-выбранные пользователем настройки рассчётов при перезагрузке страницы.
+When the user selects a specific currency for conversion, the currency code is stored using the
+useState hook. This information is also duplicated in the browser's LocalStorage. This allows the user's selected calculation settings to be preserved across page refreshes.
 
-Для ограничения выбора символов пользователем в числовом поле Amount была использована библиотека
-react-number-format.
+To limit the user's character selection in the Amount numeric field, the
+react-number-format library was used.
 
-Для предоставления возможности выбора валюты с помощью клавиатуры, на модальное окно формы со списком валют
-вешается событие с помошью addEventListener ("onKeyPress"). При переборе валют с помощью клавиатуры также
-смещается scroll, чтобы подсвеченный элемент не исчезал из поля зрения.
-При уничтожении компонентов все навешенный события снимаются, чтобы не происходили утечки памяти.
+To enable currency selection using the keyboard, an event is attached to the modal window containing the currency list using addEventListener ("onKeyPress"). When selecting currencies using the keyboard, the scroll bar is also adjusted to ensure the highlighted element remains visible.
+When components are destroyed, all attached events are removed to prevent memory leaks.
 
-Также в целях оптимизации работы приложения Все функции и часто меняющиеся компоненты были обёрнуты в hooks
-useCallback и memo.
+Also, to optimize application performance, all functions and frequently changing components were wrapped in the useCallback and memo hooks.

@@ -2,7 +2,7 @@ import { Alert, Snackbar, Typography } from "@mui/material";
 import { FC } from "react";
 import _ from "lodash";
 
-import { getInfoMessageSelector } from "../../../store/selectors";
+import { infoMessageSelector } from "../../../store/selectors";
 import {
   useAppDispatch,
   useAppSelector,
@@ -25,9 +25,8 @@ const InfoAlert: FC<{
 }> = ({ text, isOpen, onClose }) => {
   const dispatch = useAppDispatch();
 
-  const { infoText, infoType }: infoInterface = useAppSelector(
-    getInfoMessageSelector
-  );
+  const { infoText, infoType }: infoInterface =
+    useAppSelector(infoMessageSelector);
 
   return (
     <Snackbar

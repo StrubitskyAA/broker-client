@@ -10,7 +10,7 @@ import {
   setCurrencyRatesFetchingStatusAction,
   setInfoMessageAction,
 } from "../actions/redux-actions";
-import { getConnectionStatusSelector } from "../selectors";
+import { connectionStatusSelector } from "../selectors";
 
 import { dateStorageType } from "../../ts-types";
 
@@ -77,7 +77,7 @@ function* fetchRates(action: AnyAction) {
 
 function* checkConnectionSaga() {
   try {
-    const hasConnection: boolean = yield select(getConnectionStatusSelector);
+    const hasConnection: boolean = yield select(connectionStatusSelector);
 
     if (hasConnection !== navigator.onLine) {
       yield put(setConnectionAction(navigator.onLine));

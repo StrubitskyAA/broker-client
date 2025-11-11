@@ -12,7 +12,7 @@ export const lastUpdateDateSelector = (state: RootState) =>
 export const currencyRateFetchingStatusSelector = (state: RootState) =>
   currencyRatesStoreSelector(state).isFetching;
 
-export const getInfoMessageSelector = (state: RootState) => state.info;
+export const infoMessageSelector = (state: RootState) => state.info;
 
-export const getConnectionStatusSelector = (state: RootState) =>
+export const connectionStatusSelector = (state: RootState) =>
   state.connection.hasConnection;

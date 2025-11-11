@@ -38,7 +38,7 @@ const CurrencyItemButton: FC<currencyItemButtonPropsType> = memo(
       onClick(code);
     }, [onClick, code]);
 
-    return (
+    return currencyInfo ? (
       <ListItemButton
         aria-label={currencyInfo.code}
         autoFocus={isSelected}
@@ -55,7 +55,7 @@ const CurrencyItemButton: FC<currencyItemButtonPropsType> = memo(
         />
         {isSelected && <img src={checkItem} alt="checkItem" />}
       </ListItemButton>
-    );
+    ) : null;
   },
   checkIsEqualCurrencyButtonProps
 );

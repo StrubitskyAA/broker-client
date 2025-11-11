@@ -6,7 +6,7 @@ import {
   useAppSelector,
 } from "../../../store/hooks/redux-hooks";
 import {
-  getConnectionStatusSelector,
+  connectionStatusSelector,
   lastUpdateDateSelector,
 } from "../../../store/selectors";
 import { fetchCurrencyRatesAction } from "../../../store/actions/redux-actions";
@@ -31,7 +31,7 @@ import { infoTextStyles, titleStyles } from "../../../styles/text-styles";
 const Header: FC = () => {
   const dispatch = useAppDispatch();
   const lastUpdateDate: string = useAppSelector(lastUpdateDateSelector);
-  const hasConnection = useAppSelector(getConnectionStatusSelector);
+  const hasConnection = useAppSelector(connectionStatusSelector);
   const matches = useMediaQuery(breakPointCondition);
 
   const onRefreshClickHandler = useCallback(() => {

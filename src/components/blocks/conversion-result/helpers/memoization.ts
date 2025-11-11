@@ -21,6 +21,6 @@ export const checkIsEqualCurrencyButtonProps = (
 ) =>
   prevProps.isSelected === nextProps.isSelected &&
   prevProps.isHovered === nextProps.isHovered &&
-  prevProps.currencyInfo.code === nextProps.currencyInfo.code &&
+  prevProps.currencyInfo?.code === nextProps.currencyInfo?.code &&
   prevProps.code === nextProps.code &&
   prevProps.index === nextProps.index;
