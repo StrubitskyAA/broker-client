@@ -16,3 +16,5 @@ export const keyboardReactions: {
   ArrowUp: (index) => (index === 0 ? index : index - 1),
   ArrowDown: (index, length) => (index === length - 1 ? index : index + 1),
 };
+
+export const thousandSeparatorSymbol = " ";

@@ -2,6 +2,8 @@ import { InputBase } from "@mui/material";
 import { ChangeEvent, FC } from "react";
 import { NumericFormat } from "react-number-format";
 
+import { thousandSeparatorSymbol } from "../../../constants/general-constants";
+
 import { numberInputStyles } from "../../../styles/elements-styles";
 
 const NumberInput: FC<{
@@ -18,7 +20,7 @@ const NumberInput: FC<{
       allowedDecimalSeparators={[",", "."]}
       onChange={handleChange}
       customInput={InputBase}
-      thousandSeparator=" "
+      thousandSeparator={thousandSeparatorSymbol}
       valueIsNumericString
       sx={{ ...numberInputStyles }}
     />
