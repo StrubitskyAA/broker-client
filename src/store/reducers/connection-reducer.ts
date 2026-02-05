@@ -1,23 +1,20 @@
-import { connectionInterface } from "../../ts-types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { connectionActionTypesEnum } from "../constants/redux-constants";
+import { connectionInterface } from "../../ts-types";
 
 const initialState: connectionInterface = {
   hasConnection: true,
 };
 
-const reducer = (state = initialState, action: any) => {
-  const { type, payload } = action;
+const connectionSlice = createSlice({
+  name: "connection",
+  initialState,
+  reducers: {
+    setConnectionStatus: (state, action: PayloadAction<boolean>) => {
+      state.hasConnection = action.payload;
+    },
+  },
+});
 
-  switch (type) {
-    case connectionActionTypesEnum.setConnectionStatus:
-      return {
-        ...state,
-        hasConnection: payload,
-      };
-    default:
-      return { ...state };
-  }
-};
-
-export default reducer;
+export const { setConnectionStatus } = connectionSlice.actions;
+export default connectionSlice;

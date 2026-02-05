@@ -2,44 +2,40 @@ import { Typography } from "@mui/material";
 import { FC, memo, useContext } from "react";
 import _ from "lodash";
 
-import { exchangeBlockPropsType } from "./exchange-block";
+import { useAppSelector } from "../../../../hooks/redux-hooks";
 
-import { checkIsEqualResultValuesProps } from "../helpers/memoization";
+import { ICurrencyRatesProps } from "./exchange-block";
+
 import { getConversionResult } from "../helpers";
 
-import { CurrencyListContext } from "../../app";
+import { CurrencyListContext } from "../../conversion-wrapper/wrapper";
 
 import { resultConversionStyles, resultStyles } from "../styles";
 
-export type resultValueBlockPropsType = exchangeBlockPropsType & {
-  amount: string;
-};
-
-const ResultValueBlock: FC<resultValueBlockPropsType> = memo(function Inner({
-  currencyFromCode,
-  currencyToCode,
-  amount,
+const ResultValueBlock: FC<ICurrencyRatesProps> = memo(function Inner({
   currencyRates,
 }) {
   const currencyList = useContext(CurrencyListContext);
+  const { fromCurrencyCode, toCurrencyCode, amount } = useAppSelector(
+    (store) => store.currency,
+  );
 
-  return (
+  return currencyRates ? (
     <>
       <Typography sx={resultStyles}>
-        {currencyList[currencyToCode].symbolNative}
+        {currencyList[toCurrencyCode].symbolNative}
         {getConversionResult({
           currencyRates,
-          fromCode: currencyFromCode,
-          toCode: currencyToCode,
+          fromCode: fromCurrencyCode,
+          toCode: toCurrencyCode,
           amount,
         })}
       </Typography>
       <Typography sx={resultConversionStyles}>
-        {_.toNumber(amount) || 0} {currencyFromCode} =
+        {_.toNumber(amount) || 0} {fromCurrencyCode} =
       </Typography>
     </>
-  );
-},
-checkIsEqualResultValuesProps);
+  ) : null;
+});
 
 export default ResultValueBlock;

@@ -1,16 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import createSagaMiddleware from "redux-saga";
 
 import reducers from "./reducers";
-import saga from "./sagas";
+import currencyRatesApi from "../services/currency-retes-api";
 
-const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: reducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware().concat(currencyRatesApi.middleware),
 });
-sagaMiddleware.run(saga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

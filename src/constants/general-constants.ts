@@ -1,5 +1,5 @@
-export const currencyFromDefaultCode = "USD";
-export const currencyToDefaultCode = "EUR";
+export const fromCurrencyDefaultCode = "USD";
+export const toCurrencyDefaultCode = "EUR";
 export const breakPointCondition = "(min-width:750px)";
 
 export const currencyDataStorageKey = "currency_rates";

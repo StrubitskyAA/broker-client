@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import {
-  currencyRatesType,
+  ICurrencyRates,
   dateStorageType,
   preferencesStorageType,
 } from "../../../../ts-types";
@@ -9,7 +9,7 @@ import {
 import { thousandSeparatorSymbol } from "../../../../constants/general-constants";
 
 type exchangeRateFunctionPropTypes = {
-  currencyRates: currencyRatesType;
+  currencyRates: ICurrencyRates;
   fromCode: string;
   toCode: string;
 };
@@ -24,7 +24,7 @@ const getExchangeRate = ({
 export const exchangedRate = (props: exchangeRateFunctionPropTypes) =>
   getExchangeRate(props).toFixed(6);
 
-const getresultValue = ({
+const getResultValue = ({
   currencyRates,
   fromCode,
   toCode,
@@ -33,7 +33,7 @@ const getresultValue = ({
   Math.round(
     getExchangeRate({ currencyRates, fromCode, toCode }) *
       _.toNumber(amount.replace(",", ".").replaceAll(" ", "")) *
-      100
+      100,
   ) / 100;
 
 export const getConversionResult = ({
@@ -43,12 +43,12 @@ export const getConversionResult = ({
   amount,
 }: { amount: string } & exchangeRateFunctionPropTypes) => {
   const value = _.toString(
-    getresultValue({
+    getResultValue({
       currencyRates,
       fromCode,
       toCode,
       amount,
-    })
+    }),
   );
   const valueArr = value.split(".");
   const delemitedArr = valueArr[0].split("").reverse();
@@ -67,7 +67,7 @@ export const getConversionResult = ({
 
 export const setToStorage = (
   key: string,
-  value: string | dateStorageType | preferencesStorageType
+  value: string | dateStorageType | preferencesStorageType,
 ) => {
   let data = _.toString(value);
   try {

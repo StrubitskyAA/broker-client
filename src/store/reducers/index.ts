@@ -1,13 +1,15 @@
 import { combineReducers } from "redux";
 
-import currencyRatesReducer from "./currency-rates-reducer";
 import infoMessageReducer from "./info-reducer";
-import connectionReducer from "./connection-reducer";
+import connectionSlice from "./connection-reducer";
+import currencyRatesApi from "../../services/currency-retes-api";
+import currencySlice from "./currency-reducer";
 
 const reducers = combineReducers({
-  currencyRates: currencyRatesReducer,
+  [currencyRatesApi.reducerPath]: currencyRatesApi.reducer,
+  [currencySlice.reducerPath]: currencySlice.reducer,
   info: infoMessageReducer,
-  connection: connectionReducer,
+  [connectionSlice.reducerPath]: connectionSlice.reducer,
 });
 
 export default reducers;

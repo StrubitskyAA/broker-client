@@ -1,20 +1,16 @@
 import { Alert, Snackbar, Typography } from "@mui/material";
-import { FC } from "react";
+import { FC, memo, useContext } from "react";
 import _ from "lodash";
 
-import { infoMessageSelector } from "../../../store/selectors";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../store/hooks/redux-hooks";
-import { clearInfoMessageAction } from "../../../store/actions/redux-actions";
-
-import { infoInterface } from "../../../ts-types";
+import infoContext, {
+  initialInfoState,
+} from "../../../store/context/info-context";
 
 import { infoAutoCloseTimeout } from "../../../constants/time-constants";
 import { fillVariantsEnum } from "../../../constants/colors";
 
 // import CloseButton from "../buttons/close-button";
+import CloseButton from "../buttons/close-button";
 
 import { flexItemCentered } from "../../../styles/flex-styles";
 
@@ -22,29 +18,27 @@ const InfoAlert: FC<{
   text?: string;
   isOpen?: boolean;
   onClose?: () => void;
-}> = ({ text, isOpen, onClose }) => {
-  const dispatch = useAppDispatch();
-
-  const { infoText, infoType }: infoInterface =
-    useAppSelector(infoMessageSelector);
+}> = memo(({ text, isOpen, onClose }) => {
+  const {
+    info: { infoText, infoType },
+    setInfo,
+  } = useContext(infoContext);
 
   return (
     <Snackbar
       open={_.isBoolean(isOpen) ? isOpen : !!infoText}
       autoHideDuration={infoAutoCloseTimeout}
-      onClose={onClose ? onClose : () => dispatch(clearInfoMessageAction())}
+      onClose={onClose ? onClose : () => setInfo(initialInfoState)}
     >
       <Alert
         severity={infoType}
         variant={fillVariantsEnum.filled}
         sx={flexItemCentered}
-        // action={
-        //   <CloseButton
-        //     onClose={
-        //       onClose ? onClose : () => dispatch(clearInfoMessageAction())
-        //     }
-        //   />
-        // }
+        action={
+          <CloseButton
+            onClose={onClose ? onClose : () => setInfo(initialInfoState)}
+          />
+        }
       >
         <Typography variant="h6" color="inherit">
           {text || infoText}
@@ -52,6 +46,6 @@ const InfoAlert: FC<{
       </Alert>
     </Snackbar>
   );
-};
+});
 
 export default InfoAlert;

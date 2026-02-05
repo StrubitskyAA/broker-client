@@ -1,15 +1,11 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect } from "react";
+import moment from "moment";
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../store/hooks/redux-hooks";
-import {
-  connectionStatusSelector,
-  lastUpdateDateSelector,
-} from "../../../store/selectors";
-import { fetchCurrencyRatesAction } from "../../../store/actions/redux-actions";
+import { setUpdateTime } from "../../../store/reducers/currency-reducer";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
+import { useGetRatesQuery } from "../../../services/currency-retes-api";
+import { connectionSelector } from "../../../store/selectors";
 
 import { lastUpdateFormat } from "../../../constants/time-constants";
 import { breakPointCondition } from "../../../constants/general-constants";
@@ -30,13 +26,23 @@ import { infoTextStyles, titleStyles } from "../../../styles/text-styles";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
-  const lastUpdateDate: string = useAppSelector(lastUpdateDateSelector);
-  const hasConnection = useAppSelector(connectionStatusSelector);
+  const lastUpdateDate = useAppSelector(
+    (store) => store.currency.lastUpdateDateUTC,
+  );
+  const { hasConnection } = useAppSelector(connectionSelector);
   const matches = useMediaQuery(breakPointCondition);
 
+  const { refetch, isLoading, isError } = useGetRatesQuery();
+
   const onRefreshClickHandler = useCallback(() => {
-    dispatch(fetchCurrencyRatesAction(true));
+    refetch();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      dispatch(setUpdateTime(moment.utc().format()));
+    }
+  }, [isLoading, isError]);
 
   return (
     <Box sx={{ textAlign: "center", mb: 3 }}>

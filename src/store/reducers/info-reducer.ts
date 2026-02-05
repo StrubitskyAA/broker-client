@@ -1,9 +1,9 @@
-import { infoInterface } from "../../ts-types";
+import { IInfo } from "../../ts-types";
 
 import { infoActionTypesEnum } from "../constants/redux-constants";
 import { alertColorsEnum } from "../../constants/colors";
 
-const initialState: infoInterface = {
+const initialState: IInfo = {
   infoText: "",
   infoType: alertColorsEnum.success,
 };

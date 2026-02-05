@@ -1,44 +1,52 @@
 import { FC, memo } from "react";
 
-import { currencyRatesType } from "../../../../ts-types";
+import { useAppSelector } from "../../../../hooks/redux-hooks";
 
-import { checkIsEqualExchangeProps } from "../helpers/memoization";
+import { ICurrencyRates } from "../../../../ts-types";
+
 import { exchangedRate } from "../helpers";
 
 import ExchangeLine from "./exchange-line";
 
-export type exchangeBlockPropsType = {
-  currencyFromCode: string;
-  currencyToCode: string;
-  currencyRates: currencyRatesType;
-};
+export interface ICurrencyRatesProps {
+  currencyRates: ICurrencyRates | undefined;
+}
 
-const ExchangeBlock: FC<exchangeBlockPropsType> = memo(function Inner({
-  currencyFromCode,
-  currencyToCode,
+const ExchangeBlock: FC<ICurrencyRatesProps> = memo(function Inner({
   currencyRates,
 }) {
+  const { fromCurrencyCode, toCurrencyCode } = useAppSelector(
+    (store) => store.currency,
+  );
+
   return (
     <>
       <ExchangeLine
         label="Exchange Rate"
-        value={`1 ${currencyFromCode} = ${exchangedRate({
-          currencyRates,
-          fromCode: currencyFromCode,
-          toCode: currencyToCode,
-        })} ${currencyToCode}`}
+        value={
+          currencyRates
+            ? `1 ${fromCurrencyCode} = ${exchangedRate({
+                currencyRates,
+                fromCode: fromCurrencyCode,
+                toCode: toCurrencyCode,
+              })} ${toCurrencyCode}`
+            : ""
+        }
       />
       <ExchangeLine
         label="Inverse Rate"
-        value={`1 ${currencyToCode} = ${exchangedRate({
-          currencyRates,
-          fromCode: currencyToCode,
-          toCode: currencyFromCode,
-        })} ${currencyFromCode}`}
+        value={
+          currencyRates
+            ? `1 ${toCurrencyCode} = ${exchangedRate({
+                currencyRates,
+                fromCode: toCurrencyCode,
+                toCode: fromCurrencyCode,
+              })} ${fromCurrencyCode}`
+            : ""
+        }
       />
     </>
   );
-},
-checkIsEqualExchangeProps);
+});
 
 export default ExchangeBlock;
