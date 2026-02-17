@@ -1,6 +1,7 @@
 import currencyRatesApi from "../../services/currency-retes-api";
 import connectionSlice from "../reducers/connection-reducer";
 import currencySlice from "../reducers/currency-reducer";
+import infoMessageSlice from "../reducers/info-reducer";
 import { RootState } from "..";
 
 export const infoMessageSelector = (state: RootState) => state.info;
@@ -13,3 +14,6 @@ export const currencyRatesSelector = (state: RootState) =>
 
 export const connectionSelector = (state: RootState) =>
   state[connectionSlice.reducerPath];
+
+export const infoSelector = (state: RootState) =>
+  state[infoMessageSlice.reducerPath];

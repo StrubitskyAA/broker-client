@@ -1,15 +1,19 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { FC, useCallback, useEffect } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 import moment from "moment";
+import _ from "lodash";
 
 import { setUpdateTime } from "../../../store/reducers/currency-reducer";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
 import { useGetRatesQuery } from "../../../services/currency-retes-api";
 import { connectionSelector } from "../../../store/selectors";
+import { setInfoMessage } from "../../../store/reducers/info-reducer";
 
 import { lastUpdateFormat } from "../../../constants/time-constants";
 import { breakPointCondition } from "../../../constants/general-constants";
-import colors from "../../../constants/colors";
+import colors, { alertColorsEnum } from "../../../constants/colors";
 
 import { convertDateFormat } from "../../../helpers/general-helpers";
 
@@ -32,17 +36,26 @@ const Header: FC = () => {
   const { hasConnection } = useAppSelector(connectionSelector);
   const matches = useMediaQuery(breakPointCondition);
 
-  const { refetch, isLoading, isError } = useGetRatesQuery();
-
-  const onRefreshClickHandler = useCallback(() => {
-    refetch();
-  }, [dispatch]);
+  const { refetch, isError, error, status, fulfilledTimeStamp, isFetching } =
+    useGetRatesQuery();
 
   useEffect(() => {
-    if (!isLoading && !isError) {
-      dispatch(setUpdateTime(moment.utc().format()));
+    if (status === "fulfilled" && !isError) {
+      dispatch(setUpdateTime(moment(fulfilledTimeStamp).utc().format()));
     }
-  }, [isLoading, isError]);
+    if (error) {
+      dispatch(
+        setInfoMessage({
+          infoText:
+            (error as SerializedError).message ||
+            (error as FetchBaseQueryError).data
+              ? _.toString((error as FetchBaseQueryError).data)
+              : "",
+          infoType: alertColorsEnum.error,
+        }),
+      );
+    }
+  }, [fulfilledTimeStamp, status, isError, dispatch, error]);
 
   return (
     <Box sx={{ textAlign: "center", mb: 3 }}>
@@ -73,7 +86,11 @@ const Header: FC = () => {
           sx={{ m: "4px 8px" }}
           date={convertDateFormat(lastUpdateDate, lastUpdateFormat)}
         />
-        <RefreshButton sx={{ m: "4px 8px" }} onClick={onRefreshClickHandler} />
+        <RefreshButton
+          sx={{ m: "4px 8px" }}
+          onClick={refetch}
+          disabled={isFetching}
+        />
       </Box>
     </Box>
   );

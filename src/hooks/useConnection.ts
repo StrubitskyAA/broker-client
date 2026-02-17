@@ -19,5 +19,5 @@ export default function useConnectionStatus() {
     return () => {
       clearInterval(timeIntervalId);
     };
-  }, [hasConnection]);
+  }, [hasConnection, dispatch]);
 }

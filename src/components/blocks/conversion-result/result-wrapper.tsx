@@ -23,11 +23,11 @@ const ResultWrapper: FC = () => {
     <Box sx={blockWrapperStyles}>
       {isLoading && <OutPreloader size={25} />}
       <Typography sx={resultTitleStyles}>Conversion result</Typography>
-      {!_.isEmpty(data?.rates) ? (
+      {!_.isEmpty(data) ? (
         <>
-          <ResultValueBlock currencyRates={data?.rates} />
+          <ResultValueBlock currencyRates={data} />
           <Divider sx={dividerStyles} />
-          <ExchangeBlock currencyRates={data?.rates} />
+          <ExchangeBlock currencyRates={data} />
         </>
       ) : (
         <InfoMessage

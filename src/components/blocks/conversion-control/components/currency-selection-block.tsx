@@ -20,13 +20,13 @@ const CurrencySelectionBlock: FC = () => {
     (code: string) => {
       dispatch(setFromCurrencyCode(code));
     },
-    [dispatch, setFromCurrencyCode],
+    [dispatch],
   );
   const changeToCurrencyCodeHandler = useCallback(
     (code: string) => {
       dispatch(setToCurrencyCode(code));
     },
-    [dispatch, setToCurrencyCode],
+    [dispatch],
   );
 
   return (

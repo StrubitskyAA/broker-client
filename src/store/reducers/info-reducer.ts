@@ -1,6 +1,7 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { IInfo } from "../../ts-types";
 
-import { infoActionTypesEnum } from "../constants/redux-constants";
 import { alertColorsEnum } from "../../constants/colors";
 
 const initialState: IInfo = {
@@ -8,24 +9,18 @@ const initialState: IInfo = {
   infoType: alertColorsEnum.success,
 };
 
-const reducer = (state = initialState, action: any) => {
-  const { type, payload } = action;
+const InfoSlice = createSlice({
+  name: "info",
+  initialState,
+  reducers: {
+    setInfoMessage: (state, action: PayloadAction<IInfo>) => {
+      state = action.payload;
+    },
+    resetInfoMessare: (state) => {
+      state = initialState;
+    },
+  },
+});
 
-  switch (type) {
-    case infoActionTypesEnum.setInfoMessage:
-      return {
-        ...state,
-        infoText: payload.infoText,
-        infoType: payload.infoType,
-      };
-    case infoActionTypesEnum.clearInfoMessage:
-      return {
-        ...state,
-        infoText: initialState.infoText,
-      };
-    default:
-      return { ...state };
-  }
-};
-
-export default reducer;
+export const { setInfoMessage, resetInfoMessare } = InfoSlice.actions;
+export default InfoSlice;

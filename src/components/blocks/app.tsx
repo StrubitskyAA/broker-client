@@ -1,23 +1,24 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
-import _ from "lodash";
 
+import useConnectionStatus from "../../hooks/useConnection";
+
+import InfoAlert from "../elements/info/alert";
 import Header from "./header/header";
 import ConversionWrapper from "./conversion-wrapper/wrapper";
-import InfoProvider from "./info-provider";
 
 import {
   flexCentered,
   flexColStyles,
   flexFullStyles,
 } from "../../styles/flex-styles";
-import useConnectionStatus from "../../hooks/useConnection";
 
 const App: FC = () => {
   useConnectionStatus();
 
   return (
-    <InfoProvider>
+    <>
+      <InfoAlert />
       <Box
         sx={{
           ...flexFullStyles,
@@ -29,7 +30,7 @@ const App: FC = () => {
         <Header />
         <ConversionWrapper />
       </Box>
-    </InfoProvider>
+    </>
   );
 };
 

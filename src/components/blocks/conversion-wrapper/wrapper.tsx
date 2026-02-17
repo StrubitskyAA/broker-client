@@ -8,6 +8,8 @@ import { convertCurrencyList } from "../../../helpers/general-helpers";
 import { useGetRatesQuery } from "../../../services/currency-retes-api";
 import { useOnce } from "../../../hooks/useOnce";
 
+import { updateRatesInterval } from "../../../constants/time-constants";
+
 import ControlWrapper from "../conversion-control";
 import ResultWrapper from "../conversion-result";
 
@@ -16,14 +18,16 @@ import { flexCentered } from "../../../styles/flex-styles";
 export const CurrencyListContext = createContext(convertCurrencyList());
 
 const Wrapper: FC = () => {
-  const { data } = useGetRatesQuery();
+  const { data } = useGetRatesQuery(undefined, {
+    pollingInterval: updateRatesInterval,
+  });
   const [filteredList, setFilteredList] = useState<currencyListType>(
     convertCurrencyList(),
   );
 
   useOnce(() => {
-    setFilteredList(convertCurrencyList(data?.rates));
-  }, !_.isEmpty(data?.rates));
+    setFilteredList(convertCurrencyList(data));
+  }, !_.isEmpty(data));
 
   return (
     <CurrencyListContext value={filteredList}>

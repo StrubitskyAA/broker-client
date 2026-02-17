@@ -14,7 +14,7 @@ const AmountInput: FC = () => {
   const dispatch = useAppDispatch();
   const changeAmountHandler = useCallback(
     (value: string) => dispatch(setAmount(value)),
-    [dispatch, setAmount],
+    [dispatch],
   );
 
   return (

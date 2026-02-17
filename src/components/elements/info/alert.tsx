@@ -1,10 +1,10 @@
 import { Alert, Snackbar, Typography } from "@mui/material";
-import { FC, memo, useContext } from "react";
+import { FC, memo, useCallback } from "react";
 import _ from "lodash";
 
-import infoContext, {
-  initialInfoState,
-} from "../../../store/context/info-context";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
+import { infoSelector } from "../../../store/selectors";
+import { resetInfoMessare } from "../../../store/reducers/info-reducer";
 
 import { infoAutoCloseTimeout } from "../../../constants/time-constants";
 import { fillVariantsEnum } from "../../../constants/colors";
@@ -19,26 +19,24 @@ const InfoAlert: FC<{
   isOpen?: boolean;
   onClose?: () => void;
 }> = memo(({ text, isOpen, onClose }) => {
-  const {
-    info: { infoText, infoType },
-    setInfo,
-  } = useContext(infoContext);
+  const dispatch = useAppDispatch();
+  const { infoText, infoType } = useAppSelector(infoSelector);
+
+  const clearInfoHandler = useCallback(() => {
+    dispatch(resetInfoMessare());
+  }, [dispatch]);
 
   return (
     <Snackbar
       open={_.isBoolean(isOpen) ? isOpen : !!infoText}
       autoHideDuration={infoAutoCloseTimeout}
-      onClose={onClose ? onClose : () => setInfo(initialInfoState)}
+      onClose={onClose ? onClose : clearInfoHandler}
     >
       <Alert
         severity={infoType}
         variant={fillVariantsEnum.filled}
         sx={flexItemCentered}
-        action={
-          <CloseButton
-            onClose={onClose ? onClose : () => setInfo(initialInfoState)}
-          />
-        }
+        action={<CloseButton onClose={onClose ? onClose : clearInfoHandler} />}
       >
         <Typography variant="h6" color="inherit">
           {text || infoText}
