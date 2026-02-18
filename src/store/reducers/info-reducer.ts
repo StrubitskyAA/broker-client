@@ -6,7 +6,7 @@ import { alertColorsEnum } from "../../constants/colors";
 
 const initialState: IInfo = {
   infoText: "",
-  infoType: alertColorsEnum.success,
+  infoType: alertColorsEnum.error,
 };
 
 const InfoSlice = createSlice({
@@ -14,10 +14,12 @@ const InfoSlice = createSlice({
   initialState,
   reducers: {
     setInfoMessage: (state, action: PayloadAction<IInfo>) => {
-      state = action.payload;
+      state.infoText = action.payload.infoText;
+      state.infoType = action.payload.infoType;
     },
     resetInfoMessare: (state) => {
-      state = initialState;
+      state.infoText = initialState.infoText;
+      state.infoType = initialState.infoType;
     },
   },
 });

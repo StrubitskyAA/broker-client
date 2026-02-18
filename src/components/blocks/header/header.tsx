@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { FC, useCallback, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import moment from "moment";
@@ -44,13 +44,13 @@ const Header: FC = () => {
       dispatch(setUpdateTime(moment(fulfilledTimeStamp).utc().format()));
     }
     if (error) {
+      const err = error as FetchBaseQueryError;
+      const message =
+        typeof err.status !== "number" ? err.error : _.toString(err.data || "");
+
       dispatch(
         setInfoMessage({
-          infoText:
-            (error as SerializedError).message ||
-            (error as FetchBaseQueryError).data
-              ? _.toString((error as FetchBaseQueryError).data)
-              : "",
+          infoText: (error as SerializedError).message || message || "",
           infoType: alertColorsEnum.error,
         }),
       );
