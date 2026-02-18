@@ -1,9 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { FC } from "react";
 
-import { useAppSelector } from "../../../hooks/redux-hooks";
-// import { currencyRateFetchingStatusSelector } from "../../../store/selectors";
-
 import AmountInput from "./components/amount-input";
 import CurrencySelectionBlock from "./components/currency-selection-block";
 import OutPreloader from "../../elements/preloader/uot-preloader";

@@ -10,7 +10,7 @@ const ReshuffleButton: FC = () => {
   const dispatch = useAppDispatch();
   const swapCodesHandler = useCallback(() => {
     dispatch(swapCurrencyCodes());
-  }, [dispatch, swapCurrencyCodes]);
+  }, [dispatch]);
 
   return (
     <IconButton aria-label="delete" size="large" onClick={swapCodesHandler}>
