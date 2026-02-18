@@ -1,10 +1,8 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { FC } from "react";
+import _ from "lodash";
 
-import { currencyRatesStoreSelector } from "../../../store/selectors";
-import { useAppSelector } from "../../../store/hooks/redux-hooks";
-
-import { currencyRatesStateType } from "../../../store/ts-types";
+import { useGetRatesQuery } from "../../../services/currency-retes-api";
 
 import OutPreloader from "../../elements/preloader/uot-preloader";
 import ResultValueBlock from "./components/result-value";
@@ -18,33 +16,18 @@ import {
 import { rateAttantionStyles, resultTitleStyles } from "./styles";
 import { infoTextStyles } from "../../../styles/text-styles";
 
-const ResultWrapper: FC<{
-  currencyFromCode: string;
-  currencyToCode: string;
-  amount: string;
-}> = ({ currencyFromCode, currencyToCode, amount }) => {
-  const { isFetching, currencyRates }: currencyRatesStateType = useAppSelector(
-    currencyRatesStoreSelector
-  );
+const ResultWrapper: FC = () => {
+  const { data, isLoading } = useGetRatesQuery();
 
   return (
     <Box sx={blockWrapperStyles}>
-      {isFetching && <OutPreloader size={25} />}
+      {isLoading && <OutPreloader size={25} />}
       <Typography sx={resultTitleStyles}>Conversion result</Typography>
-      {currencyRates ? (
+      {!_.isEmpty(data) ? (
         <>
-          <ResultValueBlock
-            amount={amount}
-            currencyFromCode={currencyFromCode}
-            currencyToCode={currencyToCode}
-            currencyRates={currencyRates}
-          />
+          <ResultValueBlock currencyRates={data} />
           <Divider sx={dividerStyles} />
-          <ExchangeBlock
-            currencyFromCode={currencyFromCode}
-            currencyToCode={currencyToCode}
-            currencyRates={currencyRates}
-          />
+          <ExchangeBlock currencyRates={data} />
         </>
       ) : (
         <InfoMessage

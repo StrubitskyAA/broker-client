@@ -1,32 +1,25 @@
 import { Box, Grid } from "@mui/material";
 import { FC } from "react";
 
-import { useAppSelector } from "../../../store/hooks/redux-hooks";
-import { currencyRateFetchingStatusSelector } from "../../../store/selectors";
-
-import { amountInputType, currencyControlType } from "../../../ts-types";
+import { useAppSelector } from "../../../hooks/redux-hooks";
+// import { currencyRateFetchingStatusSelector } from "../../../store/selectors";
 
 import AmountInput from "./components/amount-input";
 import CurrencySelectionBlock from "./components/currency-selection-block";
 import OutPreloader from "../../elements/preloader/uot-preloader";
 
 import { blockWrapperStyles } from "../../../styles/elements-styles";
+import { useGetRatesQuery } from "../../../services/currency-retes-api";
 
-const ControlWrapper: FC<currencyControlType & amountInputType> = ({
-  onAmountChange,
-  amount,
-  ...props
-}) => {
-  const isFetching: boolean = useAppSelector(
-    currencyRateFetchingStatusSelector
-  );
+const ControlWrapper: FC = () => {
+  const { isLoading } = useGetRatesQuery();
 
   return (
     <Box sx={blockWrapperStyles}>
-      {isFetching && <OutPreloader size={25} />}
+      {isLoading && <OutPreloader size={25} />}
       <Grid container spacing={2} sx={{ width: "100%" }}>
-        <AmountInput onAmountChange={onAmountChange} amount={amount} />
-        <CurrencySelectionBlock {...props} />
+        <AmountInput />
+        <CurrencySelectionBlock />
       </Grid>
     </Box>
   );

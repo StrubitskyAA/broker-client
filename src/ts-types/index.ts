@@ -1,18 +1,12 @@
 import { alertColorsEnum } from "../constants/colors";
 
-export type currencyControlType = {
-  currencyFromCode: string;
-  setCurrencyFromCode: (code: string) => void;
-  currencyToCode: string;
-  setCurrencyToCode: (Ccde: string) => void;
-};
-
-export type amountInputType = {
-  amount: string;
-  onAmountChange: (value: string) => void;
-};
-
 export type currencyListType = { [code: string]: currencyInfoType };
+
+export interface IRatesResponse {
+  base: string;
+  date: string;
+  rates: ICurrencyRates;
+}
 
 export type currencyInfoType = {
   name: string;
@@ -26,18 +20,25 @@ export type currencyInfoType = {
   flagSrc: string;
 };
 
-export type currencyRatesType = { [currencyCode: string]: number };
+export interface ICurrencyRates {
+  [currencyCode: string]: number;
+}
 
-export interface infoInterface {
+export interface IInfo {
   infoText: string;
   infoType: alertColorsEnum;
+}
+
+export interface infoContextInterface {
+  info: IInfo;
+  setInfo: (value: IInfo) => void;
 }
 export interface connectionInterface {
   hasConnection: boolean;
 }
 
 export type dateStorageType = {
-  rates: currencyRatesType;
+  rates: ICurrencyRates;
   date: string;
 };
 

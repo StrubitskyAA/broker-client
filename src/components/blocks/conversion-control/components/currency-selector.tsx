@@ -3,7 +3,7 @@ import { FC, useCallback, useContext, useState } from "react";
 
 import CurrencyListModal from "../../../elements/modals/currency-list-modal";
 import CurrencyItemButton from "../../../elements/buttons/currency-item-button";
-import { CurrencyListContext } from "../../app";
+import { CurrencyListContext } from "../../conversion-wrapper/wrapper";
 
 import { selectorStyles } from "../../../../styles/elements-styles";
 
@@ -15,11 +15,11 @@ const CurrencySelector: FC<{
   const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false);
   const selectorCloseHandler = useCallback(
     () => setIsSelectorOpen(false),
-    [setIsSelectorOpen]
+    [setIsSelectorOpen],
   );
   const selectorOpenHandler = useCallback(
     (code?: string) => setIsSelectorOpen(true),
-    [setIsSelectorOpen]
+    [setIsSelectorOpen],
   );
 
   return (

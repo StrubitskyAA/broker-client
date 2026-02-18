@@ -5,10 +5,10 @@ import _ from "lodash";
 import { currencyListType } from "../../../ts-types";
 
 import CloseButton from "../buttons/close-button";
-import { CurrencyListContext } from "../../blocks/app";
 import CurrencySearchFilter from "./currency-list-components/currency-search";
 import CurrencyList from "./currency-list-components/currency-list";
 import InfoMessage from "../info/info-message";
+import { CurrencyListContext } from "../../blocks/conversion-wrapper/wrapper";
 
 import { modalBodyStyles, modalStyles } from "./styles/modal-styles";
 import {
@@ -35,7 +35,7 @@ const CurrencyListModal: FC<{
       onClose();
       onChange(newCode);
     },
-    [onClose, onChange]
+    [onClose, onChange],
   );
 
   return (

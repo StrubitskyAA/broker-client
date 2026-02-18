@@ -1,31 +1,28 @@
-import { infoInterface } from "../../ts-types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { infoActionTypesEnum } from "../constants/redux-constants";
+import { IInfo } from "../../ts-types";
+
 import { alertColorsEnum } from "../../constants/colors";
 
-const initialState: infoInterface = {
+const initialState: IInfo = {
   infoText: "",
-  infoType: alertColorsEnum.success,
+  infoType: alertColorsEnum.error,
 };
 
-const reducer = (state = initialState, action: any) => {
-  const { type, payload } = action;
+const InfoSlice = createSlice({
+  name: "info",
+  initialState,
+  reducers: {
+    setInfoMessage: (state, action: PayloadAction<IInfo>) => {
+      state.infoText = action.payload.infoText;
+      state.infoType = action.payload.infoType;
+    },
+    resetInfoMessare: (state) => {
+      state.infoText = initialState.infoText;
+      state.infoType = initialState.infoType;
+    },
+  },
+});
 
-  switch (type) {
-    case infoActionTypesEnum.setInfoMessage:
-      return {
-        ...state,
-        infoText: payload.infoText,
-        infoType: payload.infoType,
-      };
-    case infoActionTypesEnum.clearInfoMessage:
-      return {
-        ...state,
-        infoText: initialState.infoText,
-      };
-    default:
-      return { ...state };
-  }
-};
-
-export default reducer;
+export const { setInfoMessage, resetInfoMessare } = InfoSlice.actions;
+export default InfoSlice;

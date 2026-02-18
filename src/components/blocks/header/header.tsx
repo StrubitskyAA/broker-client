@@ -1,19 +1,19 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { FC, useCallback } from "react";
+import { FC, useEffect } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import moment from "moment";
+import _ from "lodash";
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../store/hooks/redux-hooks";
-import {
-  connectionStatusSelector,
-  lastUpdateDateSelector,
-} from "../../../store/selectors";
-import { fetchCurrencyRatesAction } from "../../../store/actions/redux-actions";
+import { setUpdateTime } from "../../../store/reducers/currency-reducer";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
+import { useGetRatesQuery } from "../../../services/currency-retes-api";
+import { connectionSelector } from "../../../store/selectors";
+import { setInfoMessage } from "../../../store/reducers/info-reducer";
 
 import { lastUpdateFormat } from "../../../constants/time-constants";
 import { breakPointCondition } from "../../../constants/general-constants";
-import colors from "../../../constants/colors";
+import colors, { alertColorsEnum } from "../../../constants/colors";
 
 import { convertDateFormat } from "../../../helpers/general-helpers";
 
@@ -30,13 +30,32 @@ import { infoTextStyles, titleStyles } from "../../../styles/text-styles";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
-  const lastUpdateDate: string = useAppSelector(lastUpdateDateSelector);
-  const hasConnection = useAppSelector(connectionStatusSelector);
+  const lastUpdateDate = useAppSelector(
+    (store) => store.currency.lastUpdateDateUTC,
+  );
+  const { hasConnection } = useAppSelector(connectionSelector);
   const matches = useMediaQuery(breakPointCondition);
 
-  const onRefreshClickHandler = useCallback(() => {
-    dispatch(fetchCurrencyRatesAction(true));
-  }, [dispatch]);
+  const { refetch, isError, error, status, fulfilledTimeStamp, isFetching } =
+    useGetRatesQuery();
+
+  useEffect(() => {
+    if (status === "fulfilled" && !isError) {
+      dispatch(setUpdateTime(moment(fulfilledTimeStamp).utc().format()));
+    }
+    if (error) {
+      const err = error as FetchBaseQueryError;
+      const message =
+        typeof err.status !== "number" ? err.error : _.toString(err.data || "");
+
+      dispatch(
+        setInfoMessage({
+          infoText: (error as SerializedError).message || message || "",
+          infoType: alertColorsEnum.error,
+        }),
+      );
+    }
+  }, [fulfilledTimeStamp, status, isError, dispatch, error]);
 
   return (
     <Box sx={{ textAlign: "center", mb: 3 }}>
@@ -67,7 +86,11 @@ const Header: FC = () => {
           sx={{ m: "4px 8px" }}
           date={convertDateFormat(lastUpdateDate, lastUpdateFormat)}
         />
-        <RefreshButton sx={{ m: "4px 8px" }} onClick={onRefreshClickHandler} />
+        <RefreshButton
+          sx={{ m: "4px 8px" }}
+          onClick={refetch}
+          disabled={isFetching}
+        />
       </Box>
     </Box>
   );

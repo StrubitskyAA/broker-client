@@ -1,18 +1,19 @@
+import currencyRatesApi from "../../services/currency-retes-api";
+import connectionSlice from "../reducers/connection-reducer";
+import currencySlice from "../reducers/currency-reducer";
+import infoMessageSlice from "../reducers/info-reducer";
 import { RootState } from "..";
-
-export const currencyRatesStoreSelector = (state: RootState) =>
-  state.currencyRates;
-
-export const currencyRatesSelector = (state: RootState) =>
-  currencyRatesStoreSelector(state).currencyRates;
-
-export const lastUpdateDateSelector = (state: RootState) =>
-  currencyRatesStoreSelector(state).lastUpdateDateUTC;
-
-export const currencyRateFetchingStatusSelector = (state: RootState) =>
-  currencyRatesStoreSelector(state).isFetching;
 
 export const infoMessageSelector = (state: RootState) => state.info;
 
-export const connectionStatusSelector = (state: RootState) =>
-  state.connection.hasConnection;
+export const currencySelector = (state: RootState) =>
+  state[currencySlice.reducerPath];
+
+export const currencyRatesSelector = (state: RootState) =>
+  state[currencyRatesApi.reducerPath];
+
+export const connectionSelector = (state: RootState) =>
+  state[connectionSlice.reducerPath];
+
+export const infoSelector = (state: RootState) =>
+  state[infoMessageSlice.reducerPath];

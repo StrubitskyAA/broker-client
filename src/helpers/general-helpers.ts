@@ -4,7 +4,7 @@ import _ from "lodash";
 import {
   currencyInfoType,
   currencyListType,
-  currencyRatesType,
+  ICurrencyRates,
 } from "../ts-types";
 
 import currencyList from "../constants/currencies.json";
@@ -15,11 +15,11 @@ export const convertDateFormat = (DateUtc: string, format: string) =>
 export const groupListByCode = (list: currencyInfoType[]): currencyListType =>
   _.keyBy(list, (currencyInfo) => currencyInfo.code);
 
-export const contertCurrencyList = (currencyRates?: currencyRatesType) =>
+export const convertCurrencyList = (currencyRates?: ICurrencyRates) =>
   currencyRates
     ? groupListByCode(
         currencyList.filter(
-          (currencyInfo) => !!currencyRates[currencyInfo.code]
-        )
+          (currencyInfo) => !!currencyRates[currencyInfo.code],
+        ),
       )
     : groupListByCode(currencyList);

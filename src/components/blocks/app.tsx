@@ -1,23 +1,11 @@
-import { FC, useEffect, createContext, useState } from "react";
+import { FC } from "react";
 import { Box } from "@mui/material";
 
-import {
-  currencyRatesSelector,
-  connectionStatusSelector,
-} from "../../store/selectors";
-import { useAppDispatch, useAppSelector } from "../../store/hooks/redux-hooks";
-import {
-  checkConnectionAction,
-  fetchCurrencyRatesAction,
-} from "../../store/actions/redux-actions";
-import { useOnce } from "../../hooks/useOnce";
+import useConnectionStatus from "../../hooks/useConnection";
 
-import { currencyListType } from "../../ts-types";
-
-import { contertCurrencyList } from "../../helpers/general-helpers";
-
+import InfoAlert from "../elements/info/alert";
 import Header from "./header/header";
-import Wrapper from "./conversion-wrapper/wrapper";
+import ConversionWrapper from "./conversion-wrapper/wrapper";
 
 import {
   flexCentered,
@@ -25,42 +13,24 @@ import {
   flexFullStyles,
 } from "../../styles/flex-styles";
 
-export const CurrencyListContext = createContext(contertCurrencyList());
-
 const App: FC = () => {
-  const curencyRates = useAppSelector(currencyRatesSelector);
-  const [filteredList, setFilteredList] = useState<currencyListType>(
-    contertCurrencyList()
-  );
-  const hasConnection = useAppSelector(connectionStatusSelector);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (hasConnection) dispatch(fetchCurrencyRatesAction(hasConnection));
-    // eslint-disable-next-line
-  }, [hasConnection]);
-
-  useOnce(() => {
-    dispatch(checkConnectionAction());
-  }, true);
-
-  useOnce(() => {
-    setFilteredList(contertCurrencyList(curencyRates));
-  }, !!curencyRates);
+  useConnectionStatus();
 
   return (
-    <Box
-      sx={{
-        ...flexFullStyles,
-        ...flexCentered,
-        ...flexColStyles,
-        minHeight: "100vh",
-      }}
-    >
-      <Header />
-      <CurrencyListContext value={filteredList}>
-        <Wrapper />
-      </CurrencyListContext>
-    </Box>
+    <>
+      <InfoAlert />
+      <Box
+        sx={{
+          ...flexFullStyles,
+          ...flexCentered,
+          ...flexColStyles,
+          minHeight: "100vh",
+        }}
+      >
+        <Header />
+        <ConversionWrapper />
+      </Box>
+    </>
   );
 };
 
